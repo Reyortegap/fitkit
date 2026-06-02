@@ -385,7 +385,7 @@ html, body {
   background-size: cover;
   background-position: center;
   position: relative;
-  filter: grayscale(0%) contrast(1.1) brightness(0.65);
+  filter: grayscale(0%) contrast(1.1) brightness(1);
 }
 
 .chapter-divider__img::after {
@@ -554,7 +554,7 @@ p em { color: var(--yellow); font-style: normal; font-weight: 600; }
 .rule-photo {
   background-size: cover;
   background-position: center;
-  filter: grayscale(0%) contrast(1.1) brightness(0.7);
+  filter: grayscale(0%) contrast(1.1) brightness(1);
   position: relative;
 }
 
@@ -1380,7 +1380,7 @@ p em { color: var(--yellow); font-style: normal; font-weight: 600; }
 .about-method__photo {
   background-size: cover;
   background-position: center;
-  filter: grayscale(0%) contrast(1.1) brightness(0.7);
+  filter: grayscale(0%) contrast(1.1) brightness(1);
   position: relative;
 }
 
