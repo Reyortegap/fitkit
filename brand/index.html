@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FITKIT · Sistema de marca</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    background: var(--black);
+    color: var(--bone);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 64px 40px 120px; }
+
+  /* ---- Mark (inline SVG, reusable) ---- */
+  .mark { display: block; }
+
+  /* ---- Hero ---- */
+  .hero {
+    background: var(--black-soft);
+    border: 1px solid var(--black-line);
+    border-radius: var(--radius-lg);
+    padding: 72px 56px;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(120% 120% at 90% -10%, rgba(198,255,0,.12), transparent 55%);
+    pointer-events: none;
+  }
+  .hero .lockup { display: flex; align-items: center; gap: 22px; }
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: 86px;
+    letter-spacing: .01em;
+    line-height: .82;
+    color: var(--bone);
+    text-transform: uppercase;
+  }
+  .wordmark .reg { font-size: 22px; vertical-align: super; color: var(--volt); margin-left: 4px; }
+  .hero .tag {
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  /* ---- Section ---- */
+  .sec { margin-top: 64px; }
+  .sec__kicker {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--volt); margin-bottom: 10px;
+  }
+  .sec__title {
+    font-family: var(--font-display);
+    font-size: 38px; text-transform: uppercase; letter-spacing: .01em;
+    line-height: .95; margin-bottom: 28px;
+  }
+
+  /* ---- Logo variants ---- */
+  .logos { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .logo-cell {
+    border-radius: var(--radius);
+    border: 1px solid var(--black-line);
+    height: 200px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px;
+  }
+  .logo-cell.on-black { background: var(--black); }
+  .logo-cell.on-volt  { background: var(--volt); }
+  .logo-cell.on-bone  { background: var(--bone); }
+  .logo-cell .lbl {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gray);
+  }
+  .logo-cell.on-volt .lbl, .logo-cell.on-bone .lbl { color: var(--gray-dark); }
+  .mini-word { font-family: var(--font-display); font-size: 34px; text-transform: uppercase; line-height: .8; }
+  .on-black .mini-word { color: var(--bone); }
+  .on-volt  .mini-word { color: var(--black); }
+  .on-bone  .mini-word { color: var(--black); }
+
+  /* ---- Palette ---- */
+  .palette { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+  .swatch { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--black-line); }
+  .swatch .chip { height: 120px; }
+  .swatch .meta { padding: 14px 16px; background: var(--black-soft); }
+  .swatch .name { font-weight: 700; font-size: 14px; }
+  .swatch .hex { font-family: var(--font-mono); font-size: 12px; color: var(--gray); margin-top: 2px; }
+
+  /* ---- Type ---- */
+  .type-row { border-top: 1px solid var(--black-line); padding: 26px 0; }
+  .type-row:first-child { border-top: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; }
+  .t-display { font-family: var(--font-display); font-size: 64px; text-transform: uppercase; line-height: .9; }
+  .t-display .volt { color: var(--volt); }
+  .t-body { font-family: var(--font-body); font-size: 17px; max-width: 640px; color: #d7d9dd; }
+  .t-mono { font-family: var(--font-mono); font-size: 22px; font-weight: 800; color: var(--volt); }
+
+  /* ---- Applications ---- */
+  .apps { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card {
+    border-radius: var(--radius); border: 1px solid var(--black-line);
+    background: var(--black-soft); padding: 28px; min-height: 220px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .card.volt { background: var(--volt); color: var(--black); border-color: var(--volt); }
+  .card .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: .25em; text-transform: uppercase; }
+  .card.volt .eyebrow { color: #2c3b00; }
+  .card:not(.volt) .eyebrow { color: var(--volt); }
+  .card h3 { font-family: var(--font-display); font-size: 40px; text-transform: uppercase; line-height: .9; margin: 14px 0; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; padding: 8px 14px; border-radius: 999px;
+    background: var(--volt); color: var(--black); align-self: flex-start;
+  }
+  .card.volt .badge { background: var(--black); color: var(--volt); }
+  .stat { font-family: var(--font-display); font-size: 88px; line-height: .8; }
+  .card.volt .stat { color: var(--black); }
+  .card:not(.volt) .stat { color: var(--bone); }
+  .stat small { font-family: var(--font-mono); font-size: 14px; letter-spacing: .1em; display:block; color: var(--gray); margin-top: 8px; }
+  /* ---- Icons ---- */
+  .icons-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .ic-cell {
+    border-radius: var(--radius); border: 1px solid var(--black-line);
+    background: var(--black-soft); padding: 22px 10px 14px;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    transition: border-color .2s var(--ease), background .2s var(--ease);
+  }
+  .ic-cell:hover { border-color: var(--volt); background: #181b1f; }
+  .ic { width: 34px; height: 34px; color: var(--volt); display: block; }
+  .ic-cell span {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--gray);
+  }
+  .ic-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--black-line); background: var(--black-soft);
+    padding: 10px 16px; border-radius: 999px;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--bone);
+  }
+  .ic-chip .ic-sm { width: 18px; height: 18px; }
+  .ic-chip.on { background: var(--volt); border-color: var(--volt); color: var(--black); }
+  .ic-chip.on .ic { color: var(--black); }
+
+  /* ---- Patterns demo ---- */
+  .pat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .pat { height: 150px; border-radius: var(--radius); border: 1px solid var(--black-line); position: relative; overflow: hidden; background-color: var(--black); }
+  .pat span { position: absolute; left: 14px; bottom: 12px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--bone); background: rgba(10,11,13,.7); padding: 4px 8px; border-radius: 6px; }
+
+  /* ---- UI components demo ---- */
+  .ui-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-bottom: 20px; }
+  .ui-block { border: 1px solid var(--black-line); background: var(--black-soft); border-radius: var(--radius); padding: 26px; }
+
+  /* ---- Covers ---- */
+  .covers { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+  .cover-mini {
+    aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; position: relative;
+    background: var(--black-soft); border: 1px solid var(--black-line);
+    background-size: cover; background-position: center top;
+    display: flex; flex-direction: column;
+    isolation: isolate;
+  }
+  /* photo legibility: subtle top + strong bottom */
+  .cover-mini::before {
+    content: ""; position: absolute; inset: 0; z-index: 0;
+    background:
+      linear-gradient(180deg, rgba(10,11,13,.55) 0%, rgba(10,11,13,0) 22%, rgba(10,11,13,0) 46%, rgba(10,11,13,.80) 70%, rgba(10,11,13,.98) 100%);
+  }
+  /* volt hairline accent at very top */
+  .cover-mini::after { content:""; position:absolute; top:0; left:0; right:0; height:3px; background:var(--volt); z-index:3; }
+  .cover-mini > * { position: relative; z-index: 2; }
+
+  .cover-head { display:flex; align-items:center; justify-content:space-between; padding:22px 22px 0; }
+  .cover-head .cm-brand { display:flex; align-items:center; gap:9px; }
+  .cover-head .cm-brand svg { width:26px; height:26px; display:block; }
+  .cover-head .cm-brand b { font-family:var(--font-display); font-size:17px; letter-spacing:.02em; color:var(--bone); text-transform:uppercase; }
+  .cover-head .num { font-family:var(--font-mono); font-size:11px; letter-spacing:.22em; color:var(--volt); }
+
+  .cover-ghost { position:absolute; top:8px; right:14px; z-index:1;
+    font-family:var(--font-display); font-size:150px; line-height:.8; color:rgba(198,255,0,.10); }
+
+  .cover-body { margin-top:auto; padding:0 22px 22px; }
+  .cover-body .kick { font-family:var(--font-mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--volt); margin-bottom:12px; }
+  .cover-mini .ttl { font-family:var(--font-display); font-size:34px; line-height:.88; text-transform:uppercase; color:var(--bone); text-shadow:0 2px 22px rgba(0,0,0,.7); }
+  .cover-mini .ttl em { color:var(--volt); font-style:normal; }
+  .cover-body .sub { font-family:var(--font-body); font-size:12.5px; line-height:1.35; color:#c8ccd2; margin-top:12px; max-width:90%; }
+  .cover-rule { height:1px; background:rgba(255,255,255,.16); margin:18px 0 12px; }
+  .cover-foot { display:flex; align-items:center; justify-content:space-between; }
+  .cover-foot .site { font-family:var(--font-mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:#9aa0a8; }
+  .cover-foot .seal { font-family:var(--font-mono); font-size:8.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--black); background:var(--volt); padding:5px 9px; border-radius:999px; }
+
+  /* ---- Data ---- */
+  .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .ftable { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .ftable th { text-align: left; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray); padding: 0 0 10px; border-bottom: 1px solid var(--black-line); }
+  .ftable td { padding: 11px 0; border-bottom: 1px solid var(--black-line); color: var(--bone); }
+  .ftable td.v { font-family: var(--font-mono); color: var(--volt); font-weight: 700; }
+
+  /* ---- Voice ---- */
+  .voice-tag { font-family: var(--font-display); font-size: 52px; text-transform: uppercase; line-height: .95; margin-bottom: 24px; }
+  .voice-tag .volt { color: var(--volt); }
+  .phrase-bank { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .phrase { font-family: var(--font-mono); font-size: 12px; padding: 9px 14px; border-radius: 8px; background: var(--black-soft); border: 1px solid var(--black-line); color: var(--bone); }
+  .dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .dd { border-radius: var(--radius); padding: 22px; border: 1px solid var(--black-line); }
+  .dd h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 12px; }
+  .dd.do h4 { color: var(--volt); } .dd.dont h4 { color: #ff6b5e; }
+  .dd p { font-size: 14px; color: #cfd2d6; margin-bottom: 8px; }
+
+  /* ---- Social ---- */
+  .social { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; align-items: start; }
+  .ig-post { aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; position: relative; background: var(--black); border: 1px solid var(--black-line); padding: 22px; display: flex; flex-direction: column; justify-content: space-between; }
+  .ig-story { aspect-ratio: 9/16; border-radius: 14px; overflow: hidden; position: relative; padding: 22px; display: flex; flex-direction: column; justify-content: flex-end; border: 1px solid var(--black-line); }
+  .ig-highlights { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .hl { width: 64px; text-align: center; }
+  .hl .ring { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--volt); display: flex; align-items: center; justify-content: center; background: var(--black); }
+  .hl .ring .ic { width: 26px; height: 26px; color: var(--volt); }
+  .hl span { display: block; font-family: var(--font-mono); font-size: 8px; letter-spacing: .12em; text-transform: uppercase; color: var(--gray); margin-top: 6px; }
+  .ig-pp { width: 92px; height: 92px; }
+
+  /* ---- Illustration guide ---- */
+  .ill-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; align-items: stretch; }
+  .ill-rules li { list-style: none; padding: 12px 0 12px 26px; border-bottom: 1px solid var(--black-line); position: relative; font-size: 14px; color: #cfd2d6; }
+  .ill-rules li::before { content: ""; position: absolute; left: 0; top: 18px; width: 12px; height: 3px; background: var(--volt); }
+  .ill-sample { border-radius: var(--radius); border: 1px solid var(--black-line); overflow: hidden; background: var(--black-soft); display:flex; align-items:center; justify-content:center; min-height: 260px; position: relative; }
+  .ill-sample .ph { text-align: center; color: var(--gray); font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 20px; }
+  .duo-demo { display:flex; gap:10px; }
+  .duo-demo .ic { width: 70px; height: 70px; }
+
+  /* ---- Illustration library ---- */
+  .ill-lib { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .ill-lib figure { margin: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--black-line); background: var(--black-soft); }
+  .ill-lib img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; background: var(--black); }
+  .ill-lib figcaption { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--gray); padding: 9px 10px; text-align: center; }
+
+  /* ---- OG ---- */
+  .og {
+    aspect-ratio: 1200/630; border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--black-line); padding: 48px; position: relative;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .og .ow { font-family: var(--font-display); font-size: 64px; text-transform: uppercase; line-height: .92; }
+  .og .ow .volt { color: var(--volt); }
+
+  /* ---- 3D mockups ---- */
+  .mock-scene { perspective: 1600px; display: flex; gap: 70px; justify-content: center; align-items: center; padding: 30px 0; flex-wrap: wrap; }
+  .mock-tablet { width: 290px; aspect-ratio: 3/4; border-radius: 26px; background: #000; border: 9px solid #16181c;
+    box-shadow: 0 50px 90px rgba(0,0,0,.6), 0 0 0 1px #2a2e35, inset 0 0 0 2px #0d0e11;
+    transform: rotateY(-24deg) rotateX(7deg); overflow: hidden; position: relative; }
+  .mock-tablet img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mock-tablet::after { content:""; position:absolute; inset:0; background: linear-gradient(115deg, rgba(255,255,255,.14), transparent 40%); }
+  .mock-stack { position: relative; width: 250px; aspect-ratio: 3/4; transform: rotateY(20deg) rotateX(6deg); transform-style: preserve-3d; }
+  .mock-stack .bk { position: absolute; inset: 0; border-radius: 14px; overflow: hidden; border: 1px solid #2a2e35;
+    box-shadow: 0 30px 60px rgba(0,0,0,.5); }
+  .mock-stack .bk img { width:100%; height:100%; object-fit:cover; display:block; }
+  .mock-stack .bk:nth-child(1){ transform: translate(-46px,-26px) translateZ(-60px); opacity:.55; }
+  .mock-stack .bk:nth-child(2){ transform: translate(-23px,-13px) translateZ(-30px); opacity:.8; }
+
+  /* ---- Site components ---- */
+  .site-nav { display:flex; align-items:center; justify-content:space-between; padding:16px 22px; border:1px solid var(--black-line); border-radius:14px; background:rgba(20,22,26,.7); backdrop-filter: blur(6px); }
+  .site-nav .lk { display:flex; gap:26px; align-items:center; }
+  .site-nav .lk a { font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray); text-decoration:none; }
+  .site-nav .lk a:hover { color:var(--volt); }
+  .pricing { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; align-items:stretch; }
+  .pcard { border:1px solid var(--black-line); border-radius:var(--radius); background:var(--black-soft); padding:26px; display:flex; flex-direction:column; gap:14px; }
+  .pcard.feat { border-color:var(--volt); box-shadow:0 0 0 1px var(--volt) inset; }
+  .pcard .pn { font-family:var(--font-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--gray); }
+  .pcard.feat .pn { color:var(--volt); }
+  .pcard ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:9px; }
+  .pcard li { font-size:13px; color:#cfd2d6; display:flex; gap:8px; } .pcard li::before { content:"✓"; color:var(--volt); }
+  .faq-item { border-bottom:1px solid var(--black-line); padding:18px 0; }
+  .faq-q { display:flex; justify-content:space-between; align-items:center; font-weight:700; color:var(--bone); font-size:15px; }
+  .faq-q .pm { color:var(--volt); font-family:var(--font-display); font-size:22px; }
+  .faq-a { color:var(--gray); font-size:14px; margin-top:10px; max-width:90%; }
+  .prod-card { border:1px solid var(--black-line); border-radius:var(--radius); overflow:hidden; background:var(--black-soft); }
+  .prod-card img { width:100%; aspect-ratio:1/1; object-fit:cover; }
+  .prod-card .pb { padding:18px; }
+  .testi { border:1px solid var(--black-line); border-radius:var(--radius); background:var(--black-soft); padding:24px; }
+  .testi p { font-size:15px; color:var(--bone); line-height:1.5; } .testi .who { display:flex; align-items:center; gap:12px; margin-top:16px; }
+  .testi .av { width:40px; height:40px; border-radius:50%; background:var(--volt); color:var(--black); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:18px; }
+  .testi .who b { color:var(--bone); font-size:13px; display:block; } .testi .who span { color:var(--gray); font-size:11px; font-family:var(--font-mono); }
+  .site-footer { border-top:1px solid var(--black-line); padding-top:32px; display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:20px; }
+  .site-footer h5 { font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--gray); margin:0 0 12px; }
+  .site-footer a { display:block; color:#cfd2d6; text-decoration:none; font-size:13px; padding:4px 0; } .site-footer a:hover{color:var(--volt);}
+
+  /* ---- Motion demo ---- */
+  .motion-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .motion-cell { border:1px solid var(--black-line); border-radius:var(--radius); background:var(--black-soft); padding:26px; min-height:150px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; }
+  .motion-cell .lbl { font-family:var(--font-mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--gray); }
+  .sweep-bar { width:100%; height:12px; border-radius:999px; background:var(--black-line); }
+
+  /* ---- Spacing / type / a11y ---- */
+  .space-row { display:flex; align-items:center; gap:16px; margin-bottom:10px; }
+  .space-row .bar { height:18px; background:var(--volt); border-radius:4px; }
+  .space-row .tag { font-family:var(--font-mono); font-size:11px; color:var(--gray); width:90px; }
+  .type-scale > div { display:flex; align-items:baseline; gap:18px; border-bottom:1px solid var(--black-line); padding:14px 0; }
+  .type-scale .tk { font-family:var(--font-mono); font-size:10px; color:var(--gray); width:70px; flex:0 0 auto; }
+  .contrast { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .csw { border-radius:12px; padding:18px; font-weight:700; font-size:15px; position:relative; }
+  .csw .ok { position:absolute; top:8px; right:10px; font-family:var(--font-mono); font-size:10px; }
+
+  /* ---- Manifiesto ---- */
+  .manifesto { border:1px solid var(--black-line); border-radius:var(--radius-lg); padding:54px 48px; background:var(--black-soft); position:relative; overflow:hidden; }
+  .manifesto .big { font-family:var(--font-display); font-size:clamp(34px,4.5vw,64px); line-height:.92; text-transform:uppercase; color:var(--bone); max-width:14ch; }
+  .manifesto .big em { color:var(--volt); font-style:normal; }
+  .manifesto .lead { color:#cfd2d6; font-size:17px; line-height:1.6; max-width:54ch; margin-top:24px; }
+  .pos-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:18px; }
+  .pos-card { border:1px solid var(--black-line); border-radius:var(--radius); background:var(--black-soft); padding:24px; }
+  .pos-card .pl { font-family:var(--font-mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--volt); margin-bottom:10px; }
+  .pos-card p { color:#cfd2d6; font-size:14px; margin:0; }
+
+  /* ---- Framework: Triángulo Ecto ---- */
+  .tri { position:relative; width:400px; height:340px; margin:10px auto 0; }
+  .tri-lines { position:absolute; inset:0; width:100%; height:100%; }
+  .tri .node { position:absolute; width:128px; text-align:center; }
+  .tri .node .ring { width:72px; height:72px; margin:0 auto 10px; border-radius:50%; background:var(--black); border:2px solid var(--volt); display:flex; align-items:center; justify-content:center; }
+  .tri .node .ring .ic { width:34px; height:34px; color:var(--volt); }
+  .tri .node b { font-family:var(--font-display); font-size:18px; text-transform:uppercase; color:var(--bone); display:block; }
+  .tri .node span { font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; color:var(--gray); text-transform:uppercase; }
+  .tri-center { position:absolute; top:54%; left:50%; transform:translate(-50%,-50%); text-align:center; }
+  .tri-center b { font-family:var(--font-display); font-size:26px; color:var(--volt); text-transform:uppercase; display:block; line-height:.9; }
+  .tri-center span { font-family:var(--font-mono); font-size:9px; letter-spacing:.2em; color:var(--gray); }
+  /* Ecto-Score */
+  .score { border:1px solid var(--black-line); border-radius:var(--radius); background:var(--black-soft); padding:26px; }
+  .score__top { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px; }
+  .score__val { font-family:var(--font-display); font-size:44px; color:var(--volt); line-height:.8; }
+  .score__bar { height:14px; border-radius:999px; background:var(--black-line); overflow:hidden; }
+  .score__bar i { display:block; height:100%; width:64%; background:linear-gradient(90deg,var(--volt-deep),var(--volt)); border-radius:999px; }
+  .score__lvls { display:flex; justify-content:space-between; margin-top:10px; font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray); }
+
+  /* ---- Transformación antes/después ---- */
+  .transform { display:grid; grid-template-columns:1fr auto 1fr; gap:20px; align-items:center; }
+  .tcol { border:1px solid var(--black-line); border-radius:var(--radius); overflow:hidden; background:var(--black-soft); position:relative; }
+  .tcol img { width:100%; aspect-ratio:3/4; object-fit:cover; display:block; }
+  .tcol .lab { position:absolute; top:14px; left:14px; font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:6px 12px; border-radius:999px; }
+  .tcol .lab.b { background:var(--black); color:var(--gray); border:1px solid var(--black-line); }
+  .tcol .lab.a { background:var(--volt); color:var(--black); }
+  .tarrow { font-family:var(--font-display); font-size:40px; color:var(--volt); }
+  .tprog { margin-top:18px; }
+  .tprog .fk-progress { height:14px; }
+  .tlevels { display:flex; justify-content:space-between; margin-top:10px; font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray); }
+  .tlevels b { color:var(--volt); }
+
+  /* ---- Video kit ---- */
+  .vid-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .vframe { aspect-ratio:9/16; border-radius:16px; overflow:hidden; position:relative; background:var(--black); border:1px solid var(--black-line); display:flex; flex-direction:column; justify-content:flex-end; padding:18px; }
+  .vframe::before { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.85)); }
+  .vframe > * { position:relative; z-index:1; }
+  .vframe.bgimg { background-size:cover; background-position:center; }
+  .vcaption { font-family:var(--font-display); font-size:26px; line-height:.95; text-transform:uppercase; color:#fff; text-align:center; margin:auto 0; }
+  .vcaption .hl { background:var(--volt); color:var(--black); padding:0 6px; }
+  .lower-third { display:inline-flex; align-items:center; gap:8px; align-self:flex-start; background:var(--volt); color:var(--black); font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:7px 12px; border-radius:8px; }
+  .vintro { align-items:center; justify-content:center; }
+  .vintro .wm { font-family:var(--font-display); font-size:34px; color:var(--bone); text-transform:uppercase; text-align:center; }
+  .vintro .wm em { color:var(--volt); font-style:normal; }
+  .vlabel { font-family:var(--font-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--gray); margin-top:10px; text-align:center; }
+
+  /* ---- Logo alternatives ---- */
+  .logo-alts { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .la-cell { border:1px solid var(--black-line); border-radius:var(--radius); background:var(--black-soft); padding:26px; display:flex; flex-direction:column; align-items:center; gap:14px; }
+  .la-cell.cur { border-color:var(--volt); }
+  .la-cell svg { width:84px; height:84px; }
+  .la-cell .nm { font-family:var(--font-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--gray); text-align:center; }
+  .la-cell.cur .nm { color:var(--volt); }
+
+  footer { margin-top: 80px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gray-dark); text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="lockup">
+      <svg class="mark" width="120" height="120" viewBox="0 0 120 120" aria-label="FITKIT mark">
+        <rect width="120" height="120" rx="26" fill="#0A0B0D" stroke="#23262B"/>
+        <g transform="translate(6,0) skewX(-11)" fill="#C6FF00">
+          <rect x="40" y="28" width="16" height="64" rx="2"/>
+          <path d="M40 28 H86 L74 44 H40 Z"/>
+          <rect x="40" y="52" width="30" height="14" rx="2"/>
+        </g>
+        <rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/>
+      </svg>
+      <div>
+        <div class="wordmark">FIT<span style="color:var(--volt)">KIT</span><span class="reg">®</span></div>
+        <div class="tag">FITKIT.SITE · ENTRENA · COME · CRECE</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGO -->
+  <section class="sec">
+    <div class="sec__kicker">01 — Logotipo</div>
+    <h2 class="sec__title">El monograma</h2>
+    <div class="logos">
+      <div class="logo-cell on-black">
+        <svg width="92" height="92" viewBox="0 0 120 120">
+          <rect width="120" height="120" rx="26" fill="#0A0B0D" stroke="#23262B"/>
+          <g transform="translate(6,0) skewX(-11)" fill="#C6FF00">
+            <rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/>
+          </g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/>
+        </svg>
+        <div class="mini-word">FITKIT</div>
+        <span class="lbl">Principal · sobre negro</span>
+      </div>
+      <div class="logo-cell on-volt">
+        <svg width="92" height="92" viewBox="0 0 120 120">
+          <rect width="120" height="120" rx="26" fill="#0A0B0D"/>
+          <g transform="translate(6,0) skewX(-11)" fill="#C6FF00">
+            <rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/>
+          </g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/>
+        </svg>
+        <div class="mini-word">FITKIT</div>
+        <span class="lbl">Sobre volt</span>
+      </div>
+      <div class="logo-cell on-bone">
+        <svg width="92" height="92" viewBox="0 0 120 120">
+          <rect width="120" height="120" rx="26" fill="#0A0B0D"/>
+          <g transform="translate(6,0) skewX(-11)" fill="#C6FF00">
+            <rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/>
+          </g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/>
+        </svg>
+        <div class="mini-word">FITKIT</div>
+        <span class="lbl">Sobre hueso</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PALETTE -->
+  <section class="sec">
+    <div class="sec__kicker">02 — Color</div>
+    <h2 class="sec__title">Paleta volt</h2>
+    <div class="palette">
+      <div class="swatch"><div class="chip" style="background:#C6FF00"></div><div class="meta"><div class="name">Volt</div><div class="hex">#C6FF00</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#0A0B0D"></div><div class="meta"><div class="name">Negro</div><div class="hex">#0A0B0D</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#F4F4F0"></div><div class="meta"><div class="name">Hueso</div><div class="hex">#F4F4F0</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#8A8F98"></div><div class="meta"><div class="name">Gris humo</div><div class="hex">#8A8F98</div></div></div>
+    </div>
+  </section>
+
+  <!-- TYPE -->
+  <section class="sec">
+    <div class="sec__kicker">03 — Tipografía</div>
+    <h2 class="sec__title">Jerarquía</h2>
+    <div class="type-row">
+      <div class="type-meta">Display · Anton · Títulos</div>
+      <div class="t-display">NO ES SUERTE,<br>ES <span class="volt">CONSISTENCIA.</span></div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Body · Inter · Texto</div>
+      <p class="t-body">Si comes y no creces, no estás roto: estás entrenando como un mesomorfo cuando tu cuerpo juega con otras reglas. FITKIT condensa el método para ectomorfos en pasos claros.</p>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Mono · JetBrains · Datos / cifras</div>
+      <div class="t-mono">4 DÍAS · 8–12 REPS · +0.5 KG / SEMANA</div>
+    </div>
+  </section>
+
+  <!-- APPLICATIONS -->
+  <section class="sec">
+    <div class="sec__kicker">04 — Aplicaciones</div>
+    <h2 class="sec__title">Sistema en acción</h2>
+    <div class="apps">
+      <div class="card volt">
+        <span class="eyebrow">FITKIT · EBOOK 01</span>
+        <h3>El protocolo<br>ectomorfo</h3>
+        <span class="badge">Método FITKIT</span>
+      </div>
+      <div class="card">
+        <span class="eyebrow">Principio 03</span>
+        <div class="stat">3000<small>KCAL / DÍA MÍNIMO PARA CRECER</small></div>
+      </div>
+      <div class="card">
+        <span class="eyebrow">Descanso entre series</span>
+        <h3 style="color:var(--volt)">2–3 MIN<span style="color:var(--bone)"> en básicos</span></h3>
+        <span class="badge">Regla de oro</span>
+      </div>
+      <div class="card volt">
+        <span class="eyebrow">Reto</span>
+        <div class="stat">30<small style="color:#2c3b00">DÍAS PARA TU PRIMER CAMBIO REAL</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ICONS -->
+  <section class="sec">
+    <div class="sec__kicker">05 — Iconografía</div>
+    <h2 class="sec__title">Sistema de iconos</h2>
+    <p style="color:var(--gray); max-width:640px; margin:-14px 0 28px; font-size:15px;">Set geométrico de 20 iconos · grid 24 · trazo 2px · esquinas redondeadas. Un lenguaje único para entreno, comida, descanso y progreso — en volt sobre negro, o invertido.</p>
+    <div class="icons-grid">
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-dumbbell"/></svg><span>Entreno</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-barbell"/></svg><span>Fuerza</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-fork"/></svg><span>Nutrición</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-flame"/></svg><span>Calorías</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-calendar"/></svg><span>Plan</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-clock"/></svg><span>Descanso</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-moon"/></svg><span>Sueño</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-drop"/></svg><span>Hidratación</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-bolt"/></svg><span>Intensidad</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-trend"/></svg><span>Progresión</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-scale"/></svg><span>Peso</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-pulse"/></svg><span>Salud</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-check"/></svg><span>Checklist</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-capsule"/></svg><span>Suplementos</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-home"/></svg><span>En casa</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-wallet"/></svg><span>Presupuesto</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-brain"/></svg><span>Mente</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-trophy"/></svg><span>Reto</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-shaker"/></svg><span>Batido</span></div>
+      <div class="ic-cell"><svg class="ic"><use href="icons.svg#ic-apple"/></svg><span>Comida limpia</span></div>
+    </div>
+
+    <!-- chips de uso -->
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:28px;">
+      <span class="ic-chip"><svg class="ic ic-sm"><use href="icons.svg#ic-dumbbell"/></svg> 4 días / semana</span>
+      <span class="ic-chip"><svg class="ic ic-sm"><use href="icons.svg#ic-flame"/></svg> 3000 kcal</span>
+      <span class="ic-chip"><svg class="ic ic-sm"><use href="icons.svg#ic-clock"/></svg> 2–3 min descanso</span>
+      <span class="ic-chip on"><svg class="ic ic-sm"><use href="icons.svg#ic-trophy"/></svg> Reto 30 días</span>
+    </div>
+  </section>
+
+  <!-- PATTERNS -->
+  <section class="sec">
+    <div class="sec__kicker">06 — Patrones y texturas</div>
+    <h2 class="sec__title">Fondos de marca</h2>
+    <div class="pat-grid">
+      <div class="pat fk-stripes-soft"><span>Franjas volt 45°</span></div>
+      <div class="pat fk-grid"><span>Grid técnico</span></div>
+      <div class="pat fk-halftone"><span>Halftone</span></div>
+      <div class="pat fk-grain" style="background-color:var(--black-soft)"><span>Grano sutil</span></div>
+      <div class="pat fk-glow"><span>Glow volt</span></div>
+      <div class="pat" style="background:var(--volt)"><span style="background:rgba(255,255,255,.6);color:#000">Bloque sólido</span></div>
+    </div>
+  </section>
+
+  <!-- UI COMPONENTS -->
+  <section class="sec">
+    <div class="sec__kicker">07 — Componentes UI</div>
+    <h2 class="sec__title">Botones y elementos</h2>
+    <div class="ui-block">
+      <div class="ui-row">
+        <button class="fk-btn fk-btn--primary">Comprar ahora →</button>
+        <button class="fk-btn fk-btn--secondary">Ver muestra</button>
+        <button class="fk-btn fk-btn--ghost">Saber más</button>
+        <button class="fk-btn fk-btn--disabled" disabled>Agotado</button>
+      </div>
+      <div class="ui-row">
+        <span class="fk-badge">Método FITKIT</span>
+        <span class="fk-badge--outline fk-badge">Nuevo</span>
+        <span class="fk-badge fk-badge--dark">Bestseller</span>
+        <span class="fk-price"><span class="cur">$</span><span class="amt">14</span><span class="old">$29</span></span>
+      </div>
+      <div class="ui-row" style="margin-bottom:0">
+        <input class="fk-field" placeholder="tu@email.com" style="max-width:280px">
+        <button class="fk-btn fk-btn--primary">Quiero el kit</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- COVERS -->
+  <section class="sec">
+    <div class="sec__kicker">08 — Sistema de portadas</div>
+    <h2 class="sec__title">Colección de ebooks</h2>
+    <div class="covers">
+      <div class="cover-mini" style="background-image:url('illustrations/photos/cover-rutina.png')">
+        <div class="cover-head">
+          <span class="cm-brand">
+            <svg viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#0A0B0D"/><g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/></svg>
+            <b>FITKIT</b>
+          </span>
+          <span class="num">N.º 01</span>
+        </div>
+        <div class="cover-ghost">01</div>
+        <div class="cover-body">
+          <div class="kick">Rutina · Hipertrofia</div>
+          <div class="ttl">El protocolo<br><em>ectomorfo</em></div>
+          <p class="sub">La rutina diseñada para el cuerpo que no gana masa fácil.</p>
+          <div class="cover-rule"></div>
+          <div class="cover-foot"><span class="site">FITKIT.SITE</span><span class="seal">Método FITKIT</span></div>
+        </div>
+      </div>
+
+      <div class="cover-mini" style="background-image:url('illustrations/photos/cover-recetas.png')">
+        <div class="cover-head">
+          <span class="cm-brand">
+            <svg viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#0A0B0D"/><g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/></svg>
+            <b>FITKIT</b>
+          </span>
+          <span class="num">N.º 02</span>
+        </div>
+        <div class="cover-ghost">02</div>
+        <div class="cover-body">
+          <div class="kick">Nutrición · Volumen</div>
+          <div class="ttl">Cocina de<br><em>volumen</em></div>
+          <p class="sub">Come 3000+ kcal limpias sin reventarte el estómago.</p>
+          <div class="cover-rule"></div>
+          <div class="cover-foot"><span class="site">FITKIT.SITE</span><span class="seal">Método FITKIT</span></div>
+        </div>
+      </div>
+
+      <div class="cover-mini" style="background-image:url('illustrations/photos/cover-plan.png')">
+        <div class="cover-head">
+          <span class="cm-brand">
+            <svg viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#0A0B0D"/><g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/></svg>
+            <b>FITKIT</b>
+          </span>
+          <span class="num">N.º 03</span>
+        </div>
+        <div class="cover-ghost">03</div>
+        <div class="cover-body">
+          <div class="kick">Plan · 30 días</div>
+          <div class="ttl">Reto<br><em>ecto 30</em></div>
+          <p class="sub">Tu primer cambio real, guiado día a día.</p>
+          <div class="cover-rule"></div>
+          <div class="cover-foot"><span class="site">FITKIT.SITE</span><span class="seal">Método FITKIT</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA BLOCKS -->
+  <section class="sec">
+    <div class="sec__kicker">09 — Bloques de datos</div>
+    <h2 class="sec__title">Visualización</h2>
+    <div class="data-grid">
+      <div class="ui-block">
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-bottom:18px">Progreso del reto</div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--bone);margin-bottom:8px"><span>Semana 3 de 4</span><span style="color:var(--volt)">75%</span></div>
+        <div class="fk-progress" style="margin-bottom:22px"><i style="width:75%"></i></div>
+        <div style="display:flex;gap:30px">
+          <div class="fk-stat" style="font-size:48px">+3.2<small>KG GANADOS</small></div>
+          <div class="fk-stat" style="font-size:48px">3100<small>KCAL / DÍA</small></div>
+        </div>
+      </div>
+      <div class="ui-block">
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-bottom:14px">Rutina · Día A</div>
+        <table class="ftable">
+          <thead><tr><th>Ejercicio</th><th>Series</th><th>Reps</th></tr></thead>
+          <tbody>
+            <tr><td>Sentadilla</td><td class="v">4</td><td class="v">6–8</td></tr>
+            <tr><td>Press banca</td><td class="v">4</td><td class="v">8–10</td></tr>
+            <tr><td>Remo con barra</td><td class="v">3</td><td class="v">8–10</td></tr>
+            <tr><td>Press militar</td><td class="v">3</td><td class="v">10</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICE -->
+  <section class="sec">
+    <div class="sec__kicker">10 — Tono de voz</div>
+    <h2 class="sec__title">Cómo habla FITKIT</h2>
+    <div class="voice-tag">ENTRENA. COME.<br><span class="volt">CRECE.</span></div>
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-bottom:12px">Banco de frases</div>
+    <div class="phrase-bank">
+      <span class="phrase">"No es suerte, es consistencia."</span>
+      <span class="phrase">"Tu metabolismo no es tu enemigo."</span>
+      <span class="phrase">"Comer es entrenar."</span>
+      <span class="phrase">"Menos cardio, más comida."</span>
+      <span class="phrase">"El flaco que sí crece."</span>
+    </div>
+    <div class="dodont">
+      <div class="dd do">
+        <h4>✓ Sí</h4>
+        <p>Directo, retador, de tú a tú. Frases cortas.</p>
+        <p>Datos concretos: kcal, reps, kilos, días.</p>
+        <p>Empatía con el hardgainer ("sé lo que es comer y no crecer").</p>
+      </div>
+      <div class="dd dont">
+        <h4>✕ No</h4>
+        <p>Wellness blando, lenguaje de spa o "amor propio".</p>
+        <p>Promesas mágicas ("transforma tu cuerpo en 7 días").</p>
+        <p>Tecnicismos sin traducir ni párrafos largos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL -->
+  <section class="sec">
+    <div class="sec__kicker">11 — Kit de redes</div>
+    <h2 class="sec__title">Instagram</h2>
+    <div class="social">
+      <div class="ig-post fk-glow">
+        <span class="fk-badge" style="align-self:flex-start">Tip 01</span>
+        <div style="font-family:var(--font-display);font-size:30px;text-transform:uppercase;line-height:.92;color:var(--bone)">Cuánto <span style="color:var(--volt)">descansar</span> entre series</div>
+        <div class="foot" style="font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;color:var(--gray)">@FITKIT.SITE</div>
+      </div>
+      <div class="ig-story fk-stripes-soft" style="background-color:var(--black)">
+        <div style="font-family:var(--font-display);font-size:34px;text-transform:uppercase;line-height:.9;color:var(--bone)">Tu cambio<br><span style="color:var(--volt)">empieza aquí</span></div>
+        <button class="fk-btn fk-btn--primary" style="align-self:flex-start;margin-top:16px">Desliza arriba ↑</button>
+      </div>
+      <div>
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-bottom:14px">Perfil + destacados</div>
+        <svg class="ig-pp" viewBox="0 0 120 120" style="border-radius:50%;display:block;margin-bottom:18px">
+          <rect width="120" height="120" rx="60" fill="#0A0B0D"/>
+          <g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g>
+          <rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/>
+        </svg>
+        <div class="ig-highlights">
+          <div class="hl"><div class="ring"><svg class="ic"><use href="icons.svg#ic-dumbbell"/></svg></div><span>Rutina</span></div>
+          <div class="hl"><div class="ring"><svg class="ic"><use href="icons.svg#ic-fork"/></svg></div><span>Comida</span></div>
+          <div class="hl"><div class="ring"><svg class="ic"><use href="icons.svg#ic-trophy"/></svg></div><span>Reto</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ILLUSTRATION GUIDE -->
+  <section class="sec">
+    <div class="sec__kicker">12 — Guía de ilustración</div>
+    <h2 class="sec__title">Estilo de imagen</h2>
+    <div class="ill-grid">
+      <ul class="ill-rules" style="margin:0;padding:0">
+        <li><strong style="color:var(--bone)">Duotono volt + negro.</strong> Toda ilustración vive en la paleta de marca, no en color realista.</li>
+        <li><strong style="color:var(--bone)">Estilo flat / editorial.</strong> Formas limpias, sombras planas, sin degradados fotográficos.</li>
+        <li><strong style="color:var(--bone)">Tema = contenido.</strong> Si la página habla de sentadilla, se ilustra la sentadilla. Nunca fotos de stock sueltas.</li>
+        <li><strong style="color:var(--bone)">Fondo negro o volt sólido.</strong> El sujeto recortado, alto contraste, centrado.</li>
+        <li><strong style="color:var(--bone)">Acentos volt.</strong> Líneas de movimiento, números o destellos en volt para guiar el ojo.</li>
+        <li><strong style="color:var(--bone)">Consistencia.</strong> Mismo grosor de trazo y nivel de detalle en toda la colección.</li>
+      </ul>
+      <div class="ill-sample" style="padding:0">
+        <img src="illustrations/exercises/squat.png" alt="ilustración sentadilla" style="width:100%;height:100%;object-fit:cover">
+      </div>
+    </div>
+
+    <!-- gallery -->
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin:30px 0 14px">Librería · Ejercicios (10)</div>
+    <div class="ill-lib">
+      <figure><img src="illustrations/exercises/squat.png" alt="sentadilla"><figcaption>Sentadilla</figcaption></figure>
+      <figure><img src="illustrations/exercises/deadlift.png" alt="peso muerto"><figcaption>Peso muerto</figcaption></figure>
+      <figure><img src="illustrations/exercises/benchpress.png" alt="press banca"><figcaption>Press banca</figcaption></figure>
+      <figure><img src="illustrations/exercises/pullup.png" alt="dominadas"><figcaption>Dominadas</figcaption></figure>
+      <figure><img src="illustrations/exercises/overheadpress.png" alt="press militar"><figcaption>Press militar</figcaption></figure>
+      <figure><img src="illustrations/exercises/row.png" alt="remo"><figcaption>Remo</figcaption></figure>
+      <figure><img src="illustrations/exercises/curl.png" alt="curl"><figcaption>Curl bíceps</figcaption></figure>
+      <figure><img src="illustrations/exercises/dips.png" alt="fondos"><figcaption>Fondos</figcaption></figure>
+      <figure><img src="illustrations/exercises/lunge.png" alt="zancadas"><figcaption>Zancadas</figcaption></figure>
+      <figure><img src="illustrations/exercises/hipthrust.png" alt="hip thrust"><figcaption>Hip thrust</figcaption></figure>
+      <figure><img src="illustrations/exercises/legpress.png" alt="prensa"><figcaption>Prensa</figcaption></figure>
+    </div>
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin:34px 0 14px">Librería · Alimentos (12)</div>
+    <div class="ill-lib">
+      <figure><img src="illustrations/foods/egg.png" alt="huevo"><figcaption>Huevo</figcaption></figure>
+      <figure><img src="illustrations/foods/oats.png" alt="avena"><figcaption>Avena</figcaption></figure>
+      <figure><img src="illustrations/foods/rice.png" alt="arroz"><figcaption>Arroz</figcaption></figure>
+      <figure><img src="illustrations/foods/chicken.png" alt="pollo"><figcaption>Pollo</figcaption></figure>
+      <figure><img src="illustrations/foods/tuna.png" alt="atún"><figcaption>Atún</figcaption></figure>
+      <figure><img src="illustrations/foods/banana.png" alt="plátano"><figcaption>Plátano</figcaption></figure>
+      <figure><img src="illustrations/foods/peanutbutter.png" alt="mantequilla de maní"><figcaption>Mant. maní</figcaption></figure>
+      <figure><img src="illustrations/foods/milk.png" alt="leche"><figcaption>Leche</figcaption></figure>
+      <figure><img src="illustrations/foods/salmon.png" alt="salmón"><figcaption>Salmón</figcaption></figure>
+      <figure><img src="illustrations/foods/broccoli.png" alt="brócoli"><figcaption>Brócoli</figcaption></figure>
+      <figure><img src="illustrations/foods/avocado.png" alt="aguacate"><figcaption>Aguacate</figcaption></figure>
+      <figure><img src="illustrations/foods/almonds.png" alt="almendras"><figcaption>Almendras</figcaption></figure>
+    </div>
+
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin:34px 0 14px">Librería · Comidas (4)</div>
+    <div class="ill-lib">
+      <figure><img src="illustrations/meals/chickenrice.png" alt="pollo con arroz"><figcaption>Pollo + arroz</figcaption></figure>
+      <figure><img src="illustrations/meals/proteinshake.png" alt="batido de proteína"><figcaption>Batido</figcaption></figure>
+      <figure><img src="illustrations/meals/oatsfruit.png" alt="avena con fruta"><figcaption>Avena + fruta</figcaption></figure>
+      <figure><img src="illustrations/meals/pasta.png" alt="pasta"><figcaption>Pasta</figcaption></figure>
+    </div>
+
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin:34px 0 6px">Mapa de músculos activados (14)</div>
+    <p style="color:var(--gray);font-size:13px;margin:0 0 14px;max-width:640px">El músculo trabajado se ilumina en volt sobre la figura. Pensado para marcar en cada ejercicio del ebook qué se está entrenando.</p>
+    <div class="ill-lib ill-lib--mus">
+      <figure><img src="illustrations/muscles/act-trapecio.png" alt="trapecio"><figcaption>Trapecio</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-pecho.png" alt="pecho"><figcaption>Pecho</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-dorsales.png" alt="dorsales"><figcaption>Dorsales</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-hombros.png" alt="hombros"><figcaption>Hombros</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-biceps.png" alt="bíceps"><figcaption>Bíceps</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-triceps.png" alt="tríceps"><figcaption>Tríceps</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-antebrazo.png" alt="antebrazo"><figcaption>Antebrazo</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-abdominales.png" alt="abdominales"><figcaption>Abdominales</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-oblicuos.png" alt="oblicuos"><figcaption>Oblicuos</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-lumbar.png" alt="lumbar"><figcaption>Lumbar</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-gluteos.png" alt="glúteos"><figcaption>Glúteos</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-cuadriceps.png" alt="cuádriceps"><figcaption>Cuádriceps</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-femoral.png" alt="femoral"><figcaption>Femoral</figcaption></figure>
+      <figure><img src="illustrations/muscles/act-gemelos.png" alt="gemelos"><figcaption>Gemelos</figcaption></figure>
+    </div>
+
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin:34px 0 14px">Librería · Suplementos (5)</div>
+    <div class="ill-lib">
+      <figure><img src="illustrations/supplements/creatine.png" alt="creatina"><figcaption>Creatina</figcaption></figure>
+      <figure><img src="illustrations/supplements/whey.png" alt="proteína"><figcaption>Proteína</figcaption></figure>
+      <figure><img src="illustrations/supplements/omega3.png" alt="omega 3"><figcaption>Omega 3</figcaption></figure>
+      <figure><img src="illustrations/supplements/vitamind.png" alt="vitamina d"><figcaption>Vitamina D</figcaption></figure>
+      <figure><img src="illustrations/supplements/preworkout.png" alt="preentreno"><figcaption>Pre-entreno</figcaption></figure>
+    </div>
+
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin:34px 0 14px">Librería · En casa (5)</div>
+    <div class="ill-lib">
+      <figure><img src="illustrations/home/pushup.png" alt="flexión"><figcaption>Flexión</figcaption></figure>
+      <figure><img src="illustrations/home/bodyweightsquat.png" alt="sentadilla libre"><figcaption>Sentadilla libre</figcaption></figure>
+      <figure><img src="illustrations/home/plank.png" alt="plancha"><figcaption>Plancha</figcaption></figure>
+      <figure><img src="illustrations/home/pikepushup.png" alt="pike push-up"><figcaption>Pike push-up</figcaption></figure>
+      <figure><img src="illustrations/home/chairdips.png" alt="fondos en silla"><figcaption>Fondos silla</figcaption></figure>
+    </div>
+
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin:34px 0 14px">Librería · Mujer (4)</div>
+    <div class="ill-lib">
+      <figure><img src="illustrations/female/fem-squat.png" alt="sentadilla mujer"><figcaption>Sentadilla</figcaption></figure>
+      <figure><img src="illustrations/female/fem-hipthrust.png" alt="hip thrust mujer"><figcaption>Hip thrust</figcaption></figure>
+      <figure><img src="illustrations/female/fem-fullbody.png" alt="figura femenina"><figcaption>Figura</figcaption></figure>
+      <figure><img src="illustrations/female/fem-glutes.png" alt="glúteos mujer"><figcaption>Glúteos</figcaption></figure>
+    </div>
+
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin:34px 0 14px">Librería · Recuperación (3)</div>
+    <div class="ill-lib">
+      <figure><img src="illustrations/recovery/sleep.png" alt="dormir"><figcaption>Dormir</figcaption></figure>
+      <figure><img src="illustrations/recovery/stretching.png" alt="estirar"><figcaption>Estirar</figcaption></figure>
+      <figure><img src="illustrations/recovery/foamroll.png" alt="foam roller"><figcaption>Foam roller</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- PHOTOGRAPHIC STYLE -->
+  <section class="sec">
+    <div class="sec__kicker">13 — Estilo fotográfico</div>
+    <h2 class="sec__title">Dirección de foto</h2>
+    <div class="ill-grid">
+      <ul class="ill-rules" style="margin:0;padding:0">
+        <li><strong style="color:var(--bone)">Gym oscuro, no comercial.</strong> Concreto, hierro negro, ambiente crudo. Nada de gimnasios blancos y luminosos de stock.</li>
+        <li><strong style="color:var(--bone)">Luz dramática + acento volt.</strong> Una fuente dura de luz, sombras profundas y un destello volt como firma de marca.</li>
+        <li><strong style="color:var(--bone)">Desaturado salvo el verde.</strong> Paleta apagada, alto contraste; el volt es el único color que canta.</li>
+        <li><strong style="color:var(--bone)">Físico real, no modelo de catálogo.</strong> El ectomorfo que sí creció: definido, intenso, sin sonrisas postizas.</li>
+        <li><strong style="color:var(--bone)">Textura y verdad.</strong> Sudor, grano de película, crops cerrados, esfuerzo real en el gesto.</li>
+        <li><strong style="color:var(--bone)">Uso:</strong> portadas, hero de web y redes (emoción). Para instruir ejercicios/comida → ilustración, no foto.</li>
+      </ul>
+      <div style="display:grid;grid-template-rows:1fr 1fr;gap:14px">
+        <div class="ill-sample" style="min-height:0;padding:0"><img src="illustrations/photos/hero1.png" alt="muestra foto 1" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML='<div class=ph>Muestra pendiente<br>recargar créditos</div>'"></div>
+        <div class="ill-sample" style="min-height:0;padding:0"><img src="illustrations/photos/hero2.png" alt="muestra foto 2" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML='<div class=ph>Muestra pendiente<br>recargar créditos</div>'"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EBOOK COMPONENTS -->
+  <section class="sec">
+    <div class="sec__kicker">15 — Componentes de ebook</div>
+    <h2 class="sec__title">Ladrillos de página</h2>
+    <p style="color:var(--gray);max-width:640px;margin:-14px 0 28px;font-size:15px">Bloques reutilizables con los que se arma cada ebook: ficha de ejercicio, ficha de receta, tarjeta de día y cajas de aviso.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+      <!-- exercise card -->
+      <div class="fk-exercise">
+        <img class="fk-exercise__img" src="illustrations/exercises/squat.png" alt="sentadilla">
+        <div>
+          <div class="fk-exercise__name">Sentadilla con barra</div>
+          <div class="fk-exercise__meta">
+            <span class="fk-tag"><b>4</b> series</span>
+            <span class="fk-tag"><b>6–8</b> reps</span>
+            <span class="fk-tag">descanso <b>2–3'</b></span>
+          </div>
+        </div>
+      </div>
+      <!-- exercise card 2 with muscle map -->
+      <div class="fk-exercise" style="grid-template-columns:120px 1fr 56px">
+        <img class="fk-exercise__img" src="illustrations/exercises/deadlift.png" alt="peso muerto">
+        <div>
+          <div class="fk-exercise__name">Peso muerto</div>
+          <div class="fk-exercise__meta">
+            <span class="fk-tag"><b>4</b> series</span>
+            <span class="fk-tag"><b>5</b> reps</span>
+          </div>
+        </div>
+        <img class="fk-exercise__muscle" src="illustrations/muscles/act-femoral.png" alt="músculo trabajado">
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;margin-top:16px">
+      <!-- recipe -->
+      <div class="fk-recipe">
+        <img class="fk-recipe__img" src="illustrations/meals/chickenrice.png" alt="pollo con arroz">
+        <div class="fk-recipe__body">
+          <div class="fk-recipe__name">Pollo + arroz</div>
+          <div class="fk-macros">
+            <div class="fk-macro"><b>650</b><span>kcal</span></div>
+            <div class="fk-macro"><b>55g</b><span>prot</span></div>
+            <div class="fk-macro"><b>70g</b><span>carb</span></div>
+            <div class="fk-macro"><b>12g</b><span>grasa</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- day card -->
+      <div class="fk-day">
+        <div class="fk-day__num">12<small>de 30 días</small></div>
+        <div style="margin-top:16px">
+          <div class="fk-check done"><i></i><span>Entreno Torso A</span></div>
+          <div class="fk-check done"><i></i><span>3 comidas + batido</span></div>
+          <div class="fk-check"><i></i><span>8h de sueño</span></div>
+          <div class="fk-check" style="border:0"><i></i><span>Foto de progreso</span></div>
+        </div>
+      </div>
+      <!-- callouts -->
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="fk-callout"><div class="fk-callout__label">Tip</div><p>Si no subes de peso, no es genética: come 300 kcal más al día.</p></div>
+        <div class="fk-callout fk-callout--warn"><div class="fk-callout__label">Cuidado</div><p>Nunca sacrifiques técnica por cargar más peso.</p></div>
+      </div>
+    </div>
+
+    <div class="fk-callout fk-callout--quote" style="margin-top:16px">
+      <p>No es suerte,<br>es <em>consistencia.</em></p>
+    </div>
+  </section>
+
+  <!-- COMMERCE -->
+  <section class="sec">
+    <div class="sec__kicker">16 — Comercio</div>
+    <h2 class="sec__title">Elementos de venta</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+      <div class="ui-block">
+        <span class="fk-pack-badge" style="margin-bottom:18px">Pack completo · 3 ebooks</span>
+        <div class="fk-offer" style="margin-bottom:18px">
+          <span class="now"><span class="cur">$</span>14</span>
+          <span class="was">$29</span>
+          <span class="off">−52%</span>
+        </div>
+        <div style="margin-bottom:18px"><span class="fk-stars">★★★★★</span><span>4.9 · 1.240 reseñas</span></div>
+        <button class="fk-btn fk-btn--primary fk-pulse">Comprar el pack →</button>
+      </div>
+      <div class="ui-block" style="display:flex;flex-direction:column;gap:16px;justify-content:center">
+        <div class="fk-guarantee">
+          <div class="fk-guarantee__seal">30</div>
+          <div><b>Garantía de 30 días</b><br><span>Si no ves cambios, te devolvemos el 100%.</span></div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <span class="fk-tag">✓ Descarga inmediata</span>
+          <span class="fk-tag">✓ PDF + móvil</span>
+          <span class="fk-tag">✓ Pago seguro</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3D MOCKUPS -->
+  <section class="sec">
+    <div class="sec__kicker">17 — Mockups</div>
+    <h2 class="sec__title">El producto en 3D</h2>
+    <p style="color:var(--gray);max-width:640px;margin:-14px 0 10px;font-size:15px">Para la página de venta: la portada montada en dispositivo y el stack de la colección.</p>
+    <div class="mock-scene">
+      <div class="mock-tablet">
+        <div class="cover-mini" style="border:0;border-radius:0;aspect-ratio:auto;height:100%;background-image:url('illustrations/photos/cover-rutina.png')">
+          <div class="cover-head"><span class="cm-brand"><svg viewBox="0 0 120 120" style="width:22px;height:22px"><rect width="120" height="120" rx="26" fill="#0A0B0D"/><g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/></svg><b style="font-size:14px">FITKIT</b></span><span class="num">N.º 01</span></div>
+          <div class="cover-body"><div class="kick">Rutina · Hipertrofia</div><div class="ttl" style="font-size:28px">El protocolo<br><em>ectomorfo</em></div><div class="cover-rule"></div><div class="cover-foot"><span class="site">FITKIT.SITE</span><span class="seal">Método FITKIT</span></div></div>
+        </div>
+      </div>
+      <div class="mock-stack">
+        <div class="bk"><img src="illustrations/photos/cover-plan.png" alt=""></div>
+        <div class="bk"><img src="illustrations/photos/cover-recetas.png" alt=""></div>
+        <div class="bk"><img src="illustrations/photos/cover-rutina.png" alt=""></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITE COMPONENTS -->
+  <section class="sec">
+    <div class="sec__kicker">18 — Componentes de sitio</div>
+    <h2 class="sec__title">Bloques de web</h2>
+
+    <div class="site-nav" style="margin-bottom:28px">
+      <span class="cm-brand" style="display:flex;align-items:center;gap:9px"><svg viewBox="0 0 120 120" style="width:24px;height:24px"><rect width="120" height="120" rx="26" fill="#0A0B0D"/><g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/></svg><b style="font-family:var(--font-display);color:var(--bone);font-size:18px">FITKIT</b></span>
+      <span class="lk"><a>Ebooks</a><a>Método</a><a>Resultados</a><a>FAQ</a></span>
+      <button class="fk-btn fk-btn--primary" style="padding:11px 20px;font-size:13px">Comprar</button>
+    </div>
+
+    <div class="pricing" style="margin-bottom:28px">
+      <div class="pcard"><span class="pn">Individual</span><div class="fk-offer"><span class="now" style="font-size:40px"><span class="cur" style="font-size:18px">$</span>9</span></div><ul><li>1 ebook a elección</li><li>PDF + móvil</li><li>Actualizaciones</li></ul><button class="fk-btn fk-btn--ghost" style="margin-top:auto">Elegir</button></div>
+      <div class="pcard feat"><span class="pn">Pack completo</span><div class="fk-offer"><span class="now" style="font-size:40px"><span class="cur" style="font-size:18px">$</span>14</span><span class="was">$29</span></div><ul><li>Los 3 ebooks</li><li>Mapa de músculos</li><li>Reto 30 días</li><li>Garantía 30 días</li></ul><button class="fk-btn fk-btn--primary" style="margin-top:auto">Comprar pack</button></div>
+      <div class="pcard"><span class="pn">Coaching</span><div class="fk-offer"><span class="now" style="font-size:40px"><span class="cur" style="font-size:18px">$</span>49</span></div><ul><li>Pack completo</li><li>Plan personalizado</li><li>Soporte 1:1</li></ul><button class="fk-btn fk-btn--ghost" style="margin-top:auto">Aplicar</button></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:28px">
+      <div class="ui-block">
+        <div class="faq-item"><div class="faq-q">¿Funciona si llevo años estancado? <span class="pm">+</span></div></div>
+        <div class="faq-item"><div class="faq-q">¿Necesito gimnasio? <span class="pm">+</span></div><div class="faq-a">No. Hay variante en casa con mancuernas o peso corporal.</div></div>
+        <div class="faq-item" style="border:0"><div class="faq-q">¿Cómo recibo los ebooks? <span class="pm">+</span></div></div>
+      </div>
+      <div class="testi">
+        <span class="fk-stars">★★★★★</span>
+        <p style="margin-top:12px">"Subí 6 kg en 3 meses después de años sin avanzar. El mapa de músculos me cambió la forma de entrenar."</p>
+        <div class="who"><div class="av">D</div><div><b>Diego R.</b><span>Ectomorfo · 24 años</span></div></div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px">
+      <div class="prod-card"><img src="illustrations/photos/cover-rutina.png" alt=""><div class="pb"><div style="font-family:var(--font-display);font-size:20px;text-transform:uppercase;color:var(--bone)">El Protocolo Ecto</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><span class="fk-offer"><span class="now" style="font-size:28px"><span class="cur" style="font-size:14px">$</span>9</span></span><button class="fk-btn fk-btn--primary" style="padding:9px 16px;font-size:12px">Añadir</button></div></div></div>
+      <div class="prod-card"><img src="illustrations/photos/cover-recetas.png" alt=""><div class="pb"><div style="font-family:var(--font-display);font-size:20px;text-transform:uppercase;color:var(--bone)">Cocina de Volumen</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><span class="fk-offer"><span class="now" style="font-size:28px"><span class="cur" style="font-size:14px">$</span>9</span></span><button class="fk-btn fk-btn--primary" style="padding:9px 16px;font-size:12px">Añadir</button></div></div></div>
+      <div class="prod-card"><img src="illustrations/photos/cover-plan.png" alt=""><div class="pb"><div style="font-family:var(--font-display);font-size:20px;text-transform:uppercase;color:var(--bone)">Reto Ecto 30</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><span class="fk-offer"><span class="now" style="font-size:28px"><span class="cur" style="font-size:14px">$</span>9</span></span><button class="fk-btn fk-btn--primary" style="padding:9px 16px;font-size:12px">Añadir</button></div></div></div>
+    </div>
+
+    <div class="site-footer">
+      <div><span class="cm-brand" style="display:flex;align-items:center;gap:9px;margin-bottom:12px"><svg viewBox="0 0 120 120" style="width:26px;height:26px"><rect width="120" height="120" rx="26" fill="#0A0B0D"/><g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/></svg><b style="font-family:var(--font-display);color:var(--bone);font-size:18px">FITKIT</b></span><p style="color:var(--gray);font-size:13px;max-width:230px">El método para el cuerpo que no crece fácil.</p></div>
+      <div><h5>Ebooks</h5><a>Rutina</a><a>Recetas</a><a>Reto 30 días</a></div>
+      <div><h5>Marca</h5><a>Método</a><a>Resultados</a><a>Blog</a></div>
+      <div><h5>Legal</h5><a>Términos</a><a>Privacidad</a><a>Contacto</a></div>
+    </div>
+  </section>
+
+  <!-- MOTION -->
+  <section class="sec">
+    <div class="sec__kicker">19 — Movimiento</div>
+    <h2 class="sec__title">Lenguaje de movimiento</h2>
+    <div class="motion-grid">
+      <div class="motion-cell"><div class="fk-loader"></div><span class="lbl">Loader</span></div>
+      <div class="motion-cell"><div class="sweep-bar fk-sweep"></div><span class="lbl">Barrido volt</span></div>
+      <div class="motion-cell"><button class="fk-btn fk-btn--primary fk-pulse">Comprar →</button><span class="lbl">Pulse (CTA)</span></div>
+    </div>
+    <p style="color:var(--gray);font-size:13px;margin-top:14px;font-family:var(--font-mono)">+ fade-up al entrar en viewport · hovers con desplazamiento volt · transiciones 150–250ms.</p>
+  </section>
+
+  <!-- SPACING / TYPE / A11Y -->
+  <section class="sec">
+    <div class="sec__kicker">20 — Rigor de sistema</div>
+    <h2 class="sec__title">Espaciado, escala y contraste</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+      <div>
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-bottom:14px">Escala de espaciado · base 8</div>
+        <div class="space-row"><span class="tag">space-2 · 8</span><div class="bar" style="width:8px"></div></div>
+        <div class="space-row"><span class="tag">space-4 · 16</span><div class="bar" style="width:16px"></div></div>
+        <div class="space-row"><span class="tag">space-5 · 24</span><div class="bar" style="width:24px"></div></div>
+        <div class="space-row"><span class="tag">space-6 · 32</span><div class="bar" style="width:32px"></div></div>
+        <div class="space-row"><span class="tag">space-7 · 48</span><div class="bar" style="width:48px"></div></div>
+        <div class="space-row"><span class="tag">space-8 · 64</span><div class="bar" style="width:64px"></div></div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-bottom:4px">Escala tipográfica</div>
+        <div class="type-scale">
+          <div><span class="tk">Display</span><span style="font-family:var(--font-display);font-size:40px;text-transform:uppercase;color:var(--bone)">Crece</span></div>
+          <div><span class="tk">H2</span><span style="font-family:var(--font-display);font-size:26px;text-transform:uppercase;color:var(--bone)">Sección</span></div>
+          <div><span class="tk">Body</span><span style="font-size:16px;color:#cfd2d6">Texto de cuerpo legible</span></div>
+          <div><span class="tk">Mono</span><span style="font-family:var(--font-mono);font-size:13px;color:var(--volt)">4 DÍAS · 8 REPS</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin:30px 0 14px">Contraste accesible (AA)</div>
+    <div class="contrast">
+      <div class="csw" style="background:#0A0B0D;color:#F4F4F0">Hueso/Negro<span class="ok" style="color:var(--volt)">✓ AA</span></div>
+      <div class="csw" style="background:var(--volt);color:#0A0B0D">Negro/Volt<span class="ok" style="color:#0A0B0D">✓ AA</span></div>
+      <div class="csw" style="background:#0A0B0D;color:#C6FF00">Volt/Negro<span class="ok" style="color:var(--volt)">✓ títulos</span></div>
+      <div class="csw" style="background:#F4F4F0;color:#C6FF00">Volt/Blanco<span class="ok" style="color:#b00">✗ NO</span></div>
+    </div>
+  </section>
+
+  <!-- MANIFIESTO -->
+  <section class="sec">
+    <div class="sec__kicker">21 — Manifiesto + posicionamiento</div>
+    <h2 class="sec__title">Lo que defiende FITKIT</h2>
+    <div class="manifesto fk-glow">
+      <div class="big">El flaco que come y <em>no crece</em><br>no está roto.</div>
+      <p class="lead">Está entrenando con las reglas de otro cuerpo. El ectomorfo no necesita más fuerza de voluntad ni más cardio: necesita un método hecho para su metabolismo. FITKIT existe para eso — convertir "tengo mala genética" en "sé exactamente qué hacer".</p>
+    </div>
+    <div class="pos-grid">
+      <div class="pos-card"><div class="pl">El enemigo</div><p>El mito de que "naciste flaco y así te quedas" y el bro-science que te hace entrenar como alguien que no eres.</p></div>
+      <div class="pos-card"><div class="pl">La promesa</div><p>Ganar masa real con un sistema claro: entreno, comida y descanso medidos para tu tipo de cuerpo.</p></div>
+      <div class="pos-card"><div class="pl">Para quién</div><p>Ectomorfos / hardgainers que ya lo intentaron todo y siguen viéndose igual en el espejo.</p></div>
+    </div>
+  </section>
+
+  <!-- FRAMEWORK -->
+  <section class="sec">
+    <div class="sec__kicker">22 — Framework propio</div>
+    <h2 class="sec__title">El Triángulo Ecto</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center">
+      <div class="tri">
+        <svg class="tri-lines" viewBox="0 0 400 340"><polygon points="200,28 44,300 356,300" fill="none" stroke="#C6FF00" stroke-width="2" stroke-dasharray="3 7" opacity=".6"/></svg>
+        <div class="node" style="top:0;left:50%;transform:translateX(-50%)"><div class="ring"><svg class="ic"><use href="icons.svg#ic-dumbbell"/></svg></div><b>Entreno</b><span>Estímulo</span></div>
+        <div class="node" style="bottom:0;left:0"><div class="ring"><svg class="ic"><use href="icons.svg#ic-fork"/></svg></div><b>Comida</b><span>Combustible</span></div>
+        <div class="node" style="bottom:0;right:0"><div class="ring"><svg class="ic"><use href="icons.svg#ic-moon"/></svg></div><b>Descanso</b><span>Construcción</span></div>
+        <div class="tri-center"><b>ECTO</b><span>los 3 lados</span></div>
+      </div>
+      <div>
+        <p style="color:#cfd2d6;font-size:16px;line-height:1.6;margin:0 0 22px">Tres lados, un solo sistema. Si falla uno, el triángulo se cae: puedes entrenar perfecto, pero sin comida ni descanso no creces. FITKIT enseña a sostener los tres a la vez.</p>
+        <div class="score">
+          <div class="score__top"><div><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)">Tu Ecto-Score</div></div><div class="score__val">64</div></div>
+          <div class="score__bar"><i></i></div>
+          <div class="score__lvls"><span>Flaco</span><span style="color:var(--volt)">En forma</span><span>Fuerte</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSFORMACIÓN -->
+  <section class="sec">
+    <div class="sec__kicker">23 — Sistema antes / después</div>
+    <h2 class="sec__title">La transformación</h2>
+    <p style="color:var(--gray);max-width:640px;margin:-14px 0 26px;font-size:15px">La prueba social que vende: plantilla consistente de antes/después + barra de nivel. Misma luz, mismo encuadre, mismo lenguaje.</p>
+    <div class="transform">
+      <div class="tcol"><span class="lab b">Antes</span><img src="illustrations/photos/before.png" alt="antes"></div>
+      <div class="tarrow">→</div>
+      <div class="tcol"><span class="lab a">Después · 12 sem</span><img src="illustrations/photos/hero1.png" alt="después"></div>
+    </div>
+    <div class="tprog">
+      <div class="fk-progress"><i style="width:70%"></i></div>
+      <div class="tlevels"><span>Semana 0 · 62 kg</span><span><b>+6 kg de músculo</b></span><span>Semana 12 · 68 kg</span></div>
+    </div>
+  </section>
+
+  <!-- KIT DE VÍDEO -->
+  <section class="sec">
+    <div class="sec__kicker">24 — Kit de vídeo</div>
+    <h2 class="sec__title">Identidad en Reels</h2>
+    <p style="color:var(--gray);max-width:640px;margin:-14px 0 26px;font-size:15px">Cómo se ve la marca en vídeo vertical: intro animada, estilo de subtítulos y lower-thirds.</p>
+    <div class="vid-grid">
+      <div class="vframe vintro fk-glow">
+        <div style="margin:auto;text-align:center">
+          <svg viewBox="0 0 120 120" style="width:64px;height:64px;margin-bottom:14px"><rect width="120" height="120" rx="26" fill="#0A0B0D" stroke="#23262B"/><g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/></svg>
+          <div class="vintro" style="display:block"><div class="wm">FIT<em>KIT</em></div></div>
+          <div class="vlabel">Intro / outro animada</div>
+        </div>
+      </div>
+      <div class="vframe bgimg" style="background-image:url('illustrations/photos/cover-rutina.png')">
+        <div class="vcaption">Menos <span class="hl">cardio</span>,<br>más comida.</div>
+        <div class="vlabel" style="text-align:center">Subtítulos (caption)</div>
+      </div>
+      <div class="vframe bgimg" style="background-image:url('illustrations/photos/cover-plan.png')">
+        <span class="lower-third"><svg class="ic" style="width:14px;height:14px;color:#0A0B0D"><use href="icons.svg#ic-dumbbell"/></svg> Tip 03 · Descanso</span>
+        <div class="vlabel" style="text-align:center;margin-top:auto">Lower-third</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGO EXPLORATION -->
+  <section class="sec">
+    <div class="sec__kicker">25 — Exploración de logo</div>
+    <h2 class="sec__title">Variantes de monograma</h2>
+    <p style="color:var(--gray);max-width:640px;margin:-14px 0 26px;font-size:15px">El actual funciona; aquí 3 rutas más "ownables" combinando F+K. Para decidir cuál vuelve inconfundible la marca.</p>
+    <div class="logo-alts">
+      <div class="la-cell cur">
+        <svg viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#0A0B0D" stroke="#23262B"/><g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/></svg>
+        <span class="nm">Actual · F-tick</span>
+      </div>
+      <div class="la-cell">
+        <svg viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#0A0B0D"/><g stroke="#C6FF00" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M44 32 V90"/><path d="M44 32 H80"/><path d="M44 58 H72"/><path d="M64 60 L92 33"/><path d="M64 60 L92 90"/></g></svg>
+        <span class="nm">FK ligadura</span>
+      </div>
+      <div class="la-cell">
+        <svg viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#0A0B0D"/><polygon points="60,20 96,40 96,80 60,100 24,80 24,40" fill="none" stroke="#C6FF00" stroke-width="5"/><text x="60" y="74" text-anchor="middle" font-family="Anton, sans-serif" font-size="42" fill="#C6FF00">FK</text></svg>
+        <span class="nm">Badge hexágono</span>
+      </div>
+      <div class="la-cell">
+        <svg viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#0A0B0D"/><g fill="#C6FF00"><rect x="42" y="40" width="15" height="52" rx="2"/><rect x="42" y="40" width="34" height="14" rx="2"/><rect x="42" y="60" width="26" height="13" rx="2"/><polygon points="78,20 92,40 64,40"/></g></svg>
+        <span class="nm">F + flecha (rise)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- OG -->
+  <section class="sec">
+    <div class="sec__kicker">26 — Open Graph + favicon</div>
+    <h2 class="sec__title">Compartir</h2>
+    <div class="og fk-glow">
+      <div style="display:flex;align-items:center;gap:16px">
+        <svg width="56" height="56" viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#0A0B0D" stroke="#23262B"/><g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/></svg>
+        <span style="font-family:var(--font-mono);font-size:12px;letter-spacing:.24em;color:var(--gray)">FITKIT.SITE</span>
+      </div>
+      <div class="ow">EL MÉTODO PARA<br>EL CUERPO QUE <span class="volt">NO CRECE.</span></div>
+      <div style="display:flex;gap:10px"><span class="fk-badge">3 EBOOKS</span><span class="fk-badge--outline fk-badge">RUTINA · COMIDA · RETO</span></div>
+    </div>
+    <p style="color:var(--gray);font-size:13px;margin-top:14px;font-family:var(--font-mono)">Favicon → <a href="favicon.svg" style="color:var(--volt)">favicon.svg</a> (monograma). OG dimensiona a 1200×630.</p>
+  </section>
+
+  <footer>FITKIT® · fitkit.site · Sistema de marca v1 · 2026</footer>
+</div>
+</body>
+</html>

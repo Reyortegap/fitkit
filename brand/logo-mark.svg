@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="FITKIT mark">
+  <rect width="120" height="120" rx="26" fill="#0A0B0D"/>
+  <!-- volt italic F monogram with upward thrust (rise/progress) -->
+  <g transform="translate(6,0) skewX(-11)" fill="#C6FF00">
+    <!-- stem -->
+    <rect x="40" y="28" width="16" height="64" rx="2"/>
+    <!-- top arm with diagonal speed cut -->
+    <path d="M40 28 H86 L74 44 H40 Z"/>
+    <!-- middle arm shorter -->
+    <rect x="40" y="52" width="30" height="14" rx="2"/>
+  </g>
+  <!-- accent tick -->
+  <rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/>
+</svg>

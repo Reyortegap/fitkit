@@ -1,0 +1,198 @@
+/* ============================================
+   FITKIT · DESIGN TOKENS (rumbo VOLT)
+   fitkit.site — sistema de marca compartido
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700;800&display=swap');
+
+:root {
+  /* ---- Color ---- */
+  --volt: #C6FF00;        /* acento principal — verde lima neón */
+  --volt-deep: #A6D900;   /* volt apagado para hovers/sombras */
+  --black: #0A0B0D;       /* fondo principal */
+  --black-soft: #14161A;  /* superficies elevadas */
+  --black-line: #23262B;  /* bordes sutiles */
+  --bone: #F4F4F0;        /* blanco hueso — texto sobre negro */
+  --gray: #8A8F98;        /* texto secundario */
+  --gray-dark: #4A4E55;
+
+  /* ---- Tipografía ---- */
+  --font-display: 'Anton', 'Bebas Neue', Impact, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* ---- Escala / ritmo ---- */
+  --radius: 16px;
+  --radius-lg: 26px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+
+  /* ---- Espaciado · base 8pt ---- */
+  --space-1: 4px;  --space-2: 8px;   --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px;  --space-7: 48px; --space-8: 64px;
+  --space-9: 96px; --space-10: 128px;
+
+  /* ---- Tiempos de movimiento ---- */
+  --t-fast: .15s; --t: .25s; --t-slow: .5s;
+
+  /* Breakpoints (referencia): sm 480 · md 768 · lg 1024 · xl 1280 */
+}
+
+/* ============================================
+   MOVIMIENTO · keyframes + utilidades
+   ============================================ */
+@keyframes fk-sweep { 0%{transform:translateX(-120%)} 100%{transform:translateX(220%)} }
+@keyframes fk-fade-up { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+@keyframes fk-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(198,255,0,.5)} 70%{box-shadow:0 0 0 12px rgba(198,255,0,0)} }
+@keyframes fk-spin { to{transform:rotate(360deg)} }
+.fk-anim-up { animation: fk-fade-up .6s var(--ease) both; }
+.fk-pulse { animation: fk-pulse 1.8s var(--ease) infinite; }
+.fk-loader { width:34px; height:34px; border-radius:50%; border:3px solid var(--black-line); border-top-color:var(--volt); animation: fk-spin .8s linear infinite; }
+/* barra con barrido volt (loaders/hero) */
+.fk-sweep { position:relative; overflow:hidden; }
+.fk-sweep::after { content:""; position:absolute; top:0; bottom:0; width:40%;
+  background:linear-gradient(90deg, transparent, rgba(198,255,0,.35), transparent); animation: fk-sweep 1.6s var(--ease) infinite; }
+
+/* ============================================
+   ACCESIBILIDAD · pares de texto seguros (AA)
+   --------------------------------------------
+   ✓ bone (#F4F4F0) sobre negro (#0A0B0D)      → alto contraste
+   ✓ volt (#C6FF00) sobre negro                → solo títulos/acento, NO body
+   ✓ negro sobre volt                          → texto sobre botones volt
+   ✗ volt sobre blanco/hueso                   → NO PASA AA, prohibido
+   ✗ gris (#8A8F98) sobre negro                → solo texto >=14px secundario
+   ============================================ */
+
+/* ============================================
+   COMPONENTES DE EBOOK
+   ============================================ */
+.fk-exercise {
+  display: grid; grid-template-columns: 120px 1fr; gap: var(--space-5);
+  background: var(--black-soft); border: 1px solid var(--black-line);
+  border-radius: var(--radius); padding: var(--space-5); align-items: center;
+}
+.fk-exercise__img { width: 120px; height: 120px; border-radius: 12px; object-fit: cover; background: var(--black); }
+.fk-exercise__name { font-family: var(--font-display); font-size: 26px; text-transform: uppercase; color: var(--bone); line-height: .95; }
+.fk-exercise__meta { display: flex; gap: var(--space-3); margin-top: var(--space-3); flex-wrap: wrap; }
+.fk-tag { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  background: var(--black); border: 1px solid var(--black-line); color: var(--bone); padding: 6px 12px; border-radius: 8px; }
+.fk-tag b { color: var(--volt); }
+.fk-exercise__muscle { width: 56px; height: 56px; border-radius: 10px; background: var(--black); object-fit: cover; }
+
+.fk-recipe { background: var(--black-soft); border: 1px solid var(--black-line); border-radius: var(--radius); overflow: hidden; }
+.fk-recipe__img { width: 100%; height: 150px; object-fit: cover; background: var(--black); }
+.fk-recipe__body { padding: var(--space-5); }
+.fk-recipe__name { font-family: var(--font-display); font-size: 24px; text-transform: uppercase; color: var(--bone); }
+.fk-macros { display: flex; gap: var(--space-2); margin-top: var(--space-4); }
+.fk-macro { flex: 1; background: var(--black); border-radius: 10px; padding: var(--space-3); text-align: center; }
+.fk-macro b { display: block; font-family: var(--font-display); font-size: 22px; color: var(--volt); }
+.fk-macro span { font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em; color: var(--gray); text-transform: uppercase; }
+
+.fk-day { background: var(--black-soft); border: 1px solid var(--black-line); border-radius: var(--radius); padding: var(--space-5); }
+.fk-day__num { font-family: var(--font-display); font-size: 56px; line-height: .8; color: var(--volt); }
+.fk-day__num small { font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; color: var(--gray); display: block; text-transform: uppercase; }
+.fk-check { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--bone); padding: 8px 0; border-bottom: 1px solid var(--black-line); }
+.fk-check i { width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--volt); flex: 0 0 auto; }
+.fk-check.done i { background: var(--volt); }
+.fk-check.done span { color: var(--gray); text-decoration: line-through; }
+
+.fk-callout { border-radius: var(--radius); padding: var(--space-5); border-left: 4px solid var(--volt); background: var(--black-soft); }
+.fk-callout__label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--volt); margin-bottom: 8px; }
+.fk-callout p { color: #cfd2d6; font-size: 14px; margin: 0; }
+.fk-callout--warn { border-left-color: #ff6b5e; } .fk-callout--warn .fk-callout__label { color: #ff6b5e; }
+.fk-callout--quote { border: 0; border-left: 0; text-align: center; }
+.fk-callout--quote p { font-family: var(--font-display); text-transform: uppercase; font-size: 28px; color: var(--bone); line-height: 1; }
+.fk-callout--quote p em { color: var(--volt); font-style: normal; }
+
+/* ============================================
+   COMERCIO · oferta, pack, garantía, reseñas
+   ============================================ */
+.fk-offer { display: flex; align-items: baseline; gap: var(--space-3); }
+.fk-offer .now { font-family: var(--font-display); font-size: 56px; color: var(--volt); line-height: .8; }
+.fk-offer .now .cur { font-size: 24px; vertical-align: super; }
+.fk-offer .was { font-family: var(--font-body); font-size: 18px; color: var(--gray); text-decoration: line-through; font-weight: 600; }
+.fk-offer .off { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .1em; background: var(--volt); color: var(--black); padding: 6px 10px; border-radius: 8px; }
+.fk-pack-badge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; background: var(--black); border: 1.5px solid var(--volt); color: var(--volt); padding: 8px 14px; border-radius: 999px; }
+.fk-guarantee { display: inline-flex; align-items: center; gap: 12px; border: 1px dashed var(--black-line); border-radius: var(--radius); padding: var(--space-4) var(--space-5); }
+.fk-guarantee__seal { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--volt); display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 16px; color: var(--volt); flex: 0 0 auto; }
+.fk-guarantee b { color: var(--bone); font-size: 14px; } .fk-guarantee span { color: var(--gray); font-size: 12px; }
+.fk-stars { color: var(--volt); font-size: 18px; letter-spacing: 2px; }
+.fk-stars + span { font-family: var(--font-mono); font-size: 12px; color: var(--gray); margin-left: 8px; }
+
+/* ============================================
+   PATRONES Y TEXTURAS · clases reutilizables
+   ============================================ */
+.fk-stripes {
+  background-image: repeating-linear-gradient(45deg, var(--volt) 0 3px, transparent 3px 16px);
+}
+.fk-stripes-soft {
+  background-image: repeating-linear-gradient(45deg, rgba(198,255,0,.14) 0 2px, transparent 2px 13px);
+}
+.fk-grid {
+  background-image:
+    linear-gradient(var(--black-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--black-line) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+.fk-halftone {
+  background-image: radial-gradient(var(--volt) 1.6px, transparent 1.7px);
+  background-size: 14px 14px;
+}
+.fk-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
+.fk-glow {
+  background: radial-gradient(120% 120% at 80% -10%, rgba(198,255,0,.18), transparent 55%), var(--black);
+}
+
+/* ============================================
+   COMPONENTES UI · botones, badges, tags, inputs
+   ============================================ */
+.fk-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-body); font-weight: 800; font-size: 15px;
+  letter-spacing: .02em; line-height: 1;
+  padding: 16px 26px; border-radius: 999px; border: 0; cursor: pointer;
+  text-decoration: none; transition: transform .15s var(--ease), background .15s var(--ease), box-shadow .15s var(--ease);
+}
+.fk-btn:active { transform: translateY(1px); }
+.fk-btn--primary { background: var(--volt); color: var(--black); }
+.fk-btn--primary:hover { background: #d4ff2e; box-shadow: 0 0 0 4px rgba(198,255,0,.18); }
+.fk-btn--secondary { background: var(--bone); color: var(--black); }
+.fk-btn--secondary:hover { background: #fff; }
+.fk-btn--ghost { background: transparent; color: var(--bone); border: 1.5px solid var(--black-line); }
+.fk-btn--ghost:hover { border-color: var(--volt); color: var(--volt); }
+.fk-btn:disabled, .fk-btn--disabled { background: var(--black-line); color: var(--gray-dark); cursor: not-allowed; box-shadow: none; }
+
+.fk-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  padding: 8px 14px; border-radius: 999px; background: var(--volt); color: var(--black);
+}
+.fk-badge--outline { background: transparent; color: var(--volt); border: 1.5px solid var(--volt); }
+.fk-badge--dark { background: var(--black); color: var(--volt); }
+
+.fk-price {
+  display: inline-flex; align-items: baseline; gap: 4px;
+  font-family: var(--font-display); color: var(--bone); line-height: 1;
+}
+.fk-price .cur { font-size: 18px; color: var(--volt); }
+.fk-price .amt { font-size: 44px; }
+.fk-price .old { font-family: var(--font-body); font-size: 16px; color: var(--gray); text-decoration: line-through; margin-left: 8px; font-weight: 600; }
+
+.fk-field {
+  width: 100%; font-family: var(--font-body); font-size: 15px; color: var(--bone);
+  background: var(--black-soft); border: 1.5px solid var(--black-line);
+  border-radius: 12px; padding: 14px 16px; outline: none;
+  transition: border-color .15s var(--ease);
+}
+.fk-field::placeholder { color: var(--gray-dark); }
+.fk-field:focus { border-color: var(--volt); }
+
+/* ---- Bloques de datos ---- */
+.fk-progress { height: 12px; border-radius: 999px; background: var(--black-line); overflow: hidden; }
+.fk-progress > i { display: block; height: 100%; background: var(--volt); border-radius: 999px; }
+.fk-stat { font-family: var(--font-display); color: var(--volt); line-height: .8; }
+.fk-stat small { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; color: var(--gray); margin-top: 8px; text-transform: uppercase; }

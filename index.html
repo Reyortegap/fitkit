@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FITKIT · Centro de marca y ebooks</title>
+<link rel="icon" href="brand/favicon.svg">
+<link rel="stylesheet" href="brand/tokens.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-body); background: var(--black); color: var(--bone); -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 56px 32px 120px; }
+  a { color: inherit; text-decoration: none; }
+
+  .hero { border:1px solid var(--black-line); border-radius:var(--radius-lg); padding:64px 48px; position:relative; overflow:hidden; background:var(--black-soft); }
+  .hero::after { content:""; position:absolute; inset:0; background:radial-gradient(120% 120% at 85% -10%, rgba(198,255,0,.14), transparent 55%); pointer-events:none; }
+  .hero .lock { display:flex; align-items:center; gap:20px; position:relative; z-index:1; }
+  .hero svg { width:78px; height:78px; }
+  .hero .wm { font-family:var(--font-display); font-size:64px; text-transform:uppercase; line-height:.85; }
+  .hero .wm .v { color:var(--volt); }
+  .hero .wm .reg { font-size:18px; vertical-align:super; color:var(--volt); }
+  .hero .tag { margin-top:18px; font-family:var(--font-mono); font-size:12px; letter-spacing:.26em; text-transform:uppercase; color:var(--gray); position:relative; z-index:1; }
+  .hero .lead { margin-top:14px; color:#cfd2d6; font-size:16px; max-width:60ch; position:relative; z-index:1; }
+
+  .sec { margin-top:56px; }
+  .sec h2 { font-family:var(--font-display); font-size:32px; text-transform:uppercase; letter-spacing:.01em; margin-bottom:6px; }
+  .sec .k { font-family:var(--font-mono); font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--volt); margin-bottom:8px; }
+  .sec .desc { color:var(--gray); font-size:14px; margin-bottom:24px; max-width:60ch; }
+
+  .big-card { display:flex; align-items:center; justify-content:space-between; gap:24px; border:1px solid var(--volt); border-radius:var(--radius); padding:30px 34px; background:linear-gradient(110deg, rgba(198,255,0,.06), transparent); }
+  .big-card h3 { font-family:var(--font-display); font-size:30px; text-transform:uppercase; }
+  .big-card p { color:#cfd2d6; font-size:14px; margin-top:6px; }
+
+  .ebooks { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  .ebook { border:1px solid var(--black-line); border-radius:var(--radius); overflow:hidden; background:var(--black-soft); transition:border-color .2s, transform .2s; }
+  .ebook:hover { border-color:var(--volt); transform:translateY(-3px); }
+  .ebook .ph { aspect-ratio:3/4; background-size:cover; background-position:center top; position:relative; }
+  .ebook .ph::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,11,13,.1), rgba(10,11,13,.75)); }
+  .ebook .num { position:absolute; top:12px; left:12px; z-index:1; font-family:var(--font-mono); font-size:10px; letter-spacing:.16em; color:var(--volt); background:rgba(10,11,13,.7); padding:4px 8px; border-radius:6px; }
+  .ebook .body { padding:14px 16px 16px; }
+  .ebook .cat { font-family:var(--font-mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--gray); }
+  .ebook .t { font-family:var(--font-display); font-size:19px; text-transform:uppercase; line-height:.95; margin-top:4px; }
+
+  .dl-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .dl { border:1px solid var(--black-line); border-radius:var(--radius); background:var(--black-soft); padding:24px; display:flex; flex-direction:column; gap:12px; }
+  .dl .ic { width:34px; height:34px; color:var(--volt); }
+  .dl h4 { font-family:var(--font-display); font-size:20px; text-transform:uppercase; }
+  .dl p { color:var(--gray); font-size:13px; }
+  .dl .btn { margin-top:auto; align-self:flex-start; }
+  .btn { display:inline-flex; align-items:center; gap:8px; font-weight:800; font-size:14px; padding:12px 20px; border-radius:999px; background:var(--volt); color:var(--black); border:0; transition:transform .15s, box-shadow .15s; }
+  .btn:hover { box-shadow:0 0 0 4px rgba(198,255,0,.18); }
+  .btn--ghost { background:transparent; color:var(--bone); border:1.5px solid var(--black-line); }
+  .btn--ghost:hover { border-color:var(--volt); color:var(--volt); box-shadow:none; }
+
+  footer { margin-top:80px; font-family:var(--font-mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--gray-dark); text-align:center; }
+  @media (max-width:880px){ .ebooks{grid-template-columns:repeat(2,1fr)} .dl-grid{grid-template-columns:1fr} .hero .wm{font-size:46px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="lock">
+      <svg viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#0A0B0D" stroke="#23262B"/><g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/></svg>
+      <div class="wm">FIT<span class="v">KIT</span><span class="reg">®</span></div>
+    </div>
+    <div class="tag">FITKIT.SITE · CENTRO DE MARCA Y EBOOKS</div>
+    <p class="lead">Todo el universo FITKIT en un sitio: el sistema de marca completo, los 11 ebooks para ectomorfos, y todas las ilustraciones, iconos, fotos y el logo listos para ver y descargar.</p>
+  </div>
+
+  <!-- BRAND -->
+  <section class="sec">
+    <div class="k">01 — Sistema de marca</div>
+    <h2>El branding completo</h2>
+    <p class="desc">Logo, paleta volt, tipografía, 20 iconos, patrones, componentes, mockups 3D, manifiesto, framework y librería de ilustraciones — 26 secciones.</p>
+    <a class="big-card" href="brand/index.html">
+      <div><h3>Abrir el brand board →</h3><p>El sistema de marca FITKIT, sección por sección.</p></div>
+      <svg style="width:54px;height:54px;color:var(--volt)" viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#0A0B0D"/><g transform="translate(6,0) skewX(-11)" fill="#C6FF00"><rect x="40" y="28" width="16" height="64" rx="2"/><path d="M40 28 H86 L74 44 H40 Z"/><rect x="40" y="52" width="30" height="14" rx="2"/></g><rect x="84" y="80" width="14" height="6" rx="3" fill="#C6FF00"/></svg>
+    </a>
+  </section>
+
+  <!-- EBOOKS -->
+  <section class="sec">
+    <div class="k">02 — Colección</div>
+    <h2>Los 11 ebooks</h2>
+    <p class="desc">Cada uno re-brandeado a FITKIT con portada de marca e ilustraciones que conectan con el contenido. Haz clic para abrirlo.</p>
+    <div class="ebooks">
+      <a class="ebook" href="ebook-1-rutina/index.html"><div class="ph" style="background-image:url('ebook-1-rutina/assets/cover.jpg')"><span class="num">01</span></div><div class="body"><div class="cat">Rutina</div><div class="t">Rutina<br>Ectomorfo</div></div></a>
+      <a class="ebook" href="ebook-2-recetas/index.html"><div class="ph" style="background-image:url('ebook-2-recetas/assets/cover.jpg')"><span class="num">02</span></div><div class="body"><div class="cat">Recetas</div><div class="t">Comer<br>para Ganar</div></div></a>
+      <a class="ebook" href="ebook-3-plan/index.html"><div class="ph" style="background-image:url('ebook-3-plan/assets/cover.jpg')"><span class="num">03</span></div><div class="body"><div class="cat">Plan</div><div class="t">Reto<br>30 Días</div></div></a>
+      <a class="ebook" href="ebook-04-mujeres/index.html"><div class="ph" style="background-image:url('ebook-04-mujeres/assets/cover.jpg')"><span class="num">04</span></div><div class="body"><div class="cat">Mujeres</div><div class="t">Curvas<br>y Fuerza</div></div></a>
+      <a class="ebook" href="ebook-05-recomposicion/index.html"><div class="ph" style="background-image:url('ebook-05-recomposicion/assets/cover.jpg')"><span class="num">05</span></div><div class="body"><div class="cat">Recomposición</div><div class="t">Recompo-<br>sición</div></div></a>
+      <a class="ebook" href="ebook-06-suplementos/index.html"><div class="ph" style="background-image:url('ebook-06-suplementos/assets/cover.jpg')"><span class="num">06</span></div><div class="body"><div class="cat">Suplementos</div><div class="t">Suple-<br>mentos</div></div></a>
+      <a class="ebook" href="ebook-07-metabolismo/index.html"><div class="ph" style="background-image:url('ebook-07-metabolismo/assets/cover.jpg')"><span class="num">07</span></div><div class="body"><div class="cat">Metabolismo</div><div class="t">Meta-<br>bolismo</div></div></a>
+      <a class="ebook" href="ebook-08-casa/index.html"><div class="ph" style="background-image:url('ebook-08-casa/assets/cover.jpg')"><span class="num">08</span></div><div class="body"><div class="cat">En casa</div><div class="t">Crecer<br>en Casa</div></div></a>
+      <a class="ebook" href="ebook-09-presupuesto/index.html"><div class="ph" style="background-image:url('ebook-09-presupuesto/assets/cover.jpg')"><span class="num">09</span></div><div class="body"><div class="cat">Presupuesto</div><div class="t">Poco<br>Presupuesto</div></div></a>
+      <a class="ebook" href="ebook-10-recuperacion/index.html"><div class="ph" style="background-image:url('ebook-10-recuperacion/assets/cover.jpg')"><span class="num">10</span></div><div class="body"><div class="cat">Recuperación</div><div class="t">Recupe-<br>ración</div></div></a>
+      <a class="ebook" href="ebook-11-mente/index.html"><div class="ph" style="background-image:url('ebook-11-mente/assets/cover.jpg')"><span class="num">11</span></div><div class="body"><div class="cat">Mente</div><div class="t">Mente<br>Fuerte</div></div></a>
+    </div>
+  </section>
+
+  <!-- DOWNLOADS -->
+  <section class="sec">
+    <div class="k">03 — Descargas</div>
+    <h2>Todo listo para usar</h2>
+    <p class="desc">Paquetes ZIP organizados. También puedes abrir cualquier archivo individual navegando a su ruta (ej. <code style="color:var(--volt)">/brand/illustrations/exercises/squat.png</code>).</p>
+    <div class="dl-grid">
+      <div class="dl">
+        <svg class="ic"><use href="brand/icons.svg#ic-dumbbell"/></svg>
+        <h4>Branding</h4>
+        <p>Logo (SVG), favicon, sprite de 20 iconos, tokens.css (paleta + tipografía).</p>
+        <a class="btn" href="downloads/fitkit-branding.zip" download>Descargar ZIP</a>
+      </div>
+      <div class="dl">
+        <svg class="ic"><use href="brand/icons.svg#ic-flame"/></svg>
+        <h4>Ilustraciones + fotos</h4>
+        <p>Más de 55 ilustraciones (ejercicios, comida, suplementos, músculos…) y todas las fotos.</p>
+        <a class="btn" href="downloads/fitkit-ilustraciones.zip" download>Descargar ZIP</a>
+      </div>
+      <div class="dl">
+        <svg class="ic"><use href="brand/icons.svg#ic-calendar"/></svg>
+        <h4>Los 11 ebooks</h4>
+        <p>HTML + CSS + assets de cada ebook, listos para abrir o exportar a PDF.</p>
+        <a class="btn" href="downloads/fitkit-ebooks.zip" download>Descargar ZIP</a>
+      </div>
+    </div>
+    <p class="desc" style="margin-top:18px">Los tres paquetes juntos = todo el sistema FITKIT. El branding y los ebooks también se pueden ver en vivo desde las secciones de arriba.</p>
+  </section>
+
+  <footer>FITKIT® · fitkit.site · Centro de marca · 2026</footer>
+</div>
+</body>
+</html>
