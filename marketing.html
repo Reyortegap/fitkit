@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FITKIT · Kit de marketing</title>
+<link rel="icon" href="brand/favicon.svg">
+<link rel="stylesheet" href="brand/tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-body);background:var(--black);color:var(--bone);-webkit-font-smoothing:antialiased;line-height:1.55}
+  .wrap{max-width:1100px;margin:0 auto;padding:56px 32px 120px}
+  a{color:var(--volt);text-decoration:none}
+  .hero{border:1px solid var(--black-line);border-radius:var(--radius-lg);padding:48px;background:var(--black-soft);position:relative;overflow:hidden;margin-bottom:8px}
+  .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 120% at 85% -10%,rgba(198,255,0,.13),transparent 55%)}
+  .hero h1{font-family:var(--font-display);font-size:clamp(34px,5vw,58px);text-transform:uppercase;line-height:.9;position:relative}
+  .hero h1 .v{color:var(--volt)}
+  .hero p{color:#cfd2d6;max-width:62ch;margin-top:14px;position:relative;font-size:16px}
+  .sec{margin-top:56px}
+  .sec>.k{font-family:var(--font-mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--volt);margin-bottom:8px}
+  .sec>h2{font-family:var(--font-display);font-size:34px;text-transform:uppercase;margin-bottom:8px}
+  .sec>.desc{color:var(--gray);font-size:14px;margin-bottom:26px;max-width:64ch}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .card{border:1px solid var(--black-line);border-radius:var(--radius);background:var(--black-soft);padding:26px}
+  .card .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--volt);margin-bottom:12px}
+  .card h3{font-family:var(--font-display);font-size:22px;text-transform:uppercase;line-height:1;margin-bottom:8px}
+  .card .hook{font-weight:800;font-size:17px;color:var(--bone);margin-bottom:10px}
+  .card p{color:#cfd2d6;font-size:14px;margin-bottom:10px}
+  .card .label{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin:12px 0 4px}
+  .cta{display:inline-block;font-family:var(--font-mono);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;background:var(--volt);color:var(--black);padding:8px 14px;border-radius:999px;margin-top:4px}
+  .visual{font-size:13px;color:var(--gray);border-left:3px solid var(--volt);padding-left:12px;margin-top:8px}
+  ol,ul{margin:6px 0 0 18px}
+  li{font-size:14px;color:#cfd2d6;margin-bottom:6px}
+  .script{counter-reset:beat}
+  .beat{border-top:1px solid var(--black-line);padding:12px 0}
+  .beat b{color:var(--volt);font-family:var(--font-mono);font-size:11px;letter-spacing:.1em}
+  .pill{display:inline-block;font-family:var(--font-mono);font-size:11px;background:var(--black);border:1px solid var(--black-line);color:var(--bone);padding:7px 12px;border-radius:8px;margin:0 6px 8px 0}
+  .email{border:1px solid var(--black-line);border-radius:var(--radius);background:var(--black-soft);padding:24px;margin-bottom:16px}
+  .email .subj{font-weight:800;color:var(--bone);font-size:16px;margin-bottom:8px}
+  .email .subj span{color:var(--volt);font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;display:block;text-transform:uppercase;margin-bottom:4px}
+  .email pre{white-space:pre-wrap;font-family:var(--font-body);font-size:14px;color:#cfd2d6}
+  .adimg{aspect-ratio:1/1;border-radius:12px;background:var(--black) center/cover;margin-bottom:14px;border:1px solid var(--black-line)}
+  footer{margin-top:80px;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-dark);text-align:center}
+  @media(max-width:820px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>Kit de <span class="v">marketing</span></h1>
+    <p>La máquina de venta de FITKIT. Anuncios, Reels, carruseles y emails listos para publicar — todos con el ángulo que vende productos digitales: <strong>identidad y transformación, no características</strong>. No vendemos un PDF; vendemos dejar de ser el flaco invisible en el espejo. <a href="index.html">← volver al centro de marca</a></p>
+  </div>
+
+  <!-- ANGULOS -->
+  <section class="sec">
+    <div class="k">00 — Estrategia</div>
+    <h2>Los 3 ángulos que venden</h2>
+    <div class="desc">Toda pieza nace de uno de estos tres ángulos. Agitan el dolor de seguir igual y venden la versión futura.</div>
+    <div class="grid2">
+      <div class="card"><div class="tag">Ángulo 1 · Identidad</div><h3>El flaco invisible</h3><p>"Entrenas, comes, te esfuerzas… y en el espejo sigues igual." Hablar al dolor de no ser visto, de no reconocerte. Vendemos convertirte en quien quieres ser.</p></div>
+      <div class="card"><div class="tag">Ángulo 2 · El enemigo</div><h3>No es tu genética</h3><p>Romper el mito: "naciste flaco y así te quedas". El enemigo es el manual equivocado (rutinas de mesomorfo) y el bro-science, no tu cuerpo.</p></div>
+      <div class="card"><div class="tag">Ángulo 3 · Transformación</div><h3>El flaco que SÍ creció</h3><p>Prueba: antes/después, +6 kg en 12 semanas, sin vivir en el gym. La transformación como evidencia de que el método funciona.</p></div>
+    </div>
+  </section>
+
+  <!-- ADS PAGADOS -->
+  <section class="sec">
+    <div class="k">01 — Anuncios pagados</div>
+    <h2>Meta · Instagram · TikTok Ads</h2>
+    <div class="desc">4 anuncios listos. Cada uno: gancho, texto principal, CTA y dirección de visual. Empieza testeando el 1 y el 2.</div>
+    <div class="grid2">
+
+      <div class="card">
+        <div class="adimg" style="background-image:url('marketing/ad-1.png')"></div>
+        <div class="tag">Anuncio 01 · Identidad</div>
+        <div class="hook">"Llevas 2 años entrenando. Y en el espejo, sigues igual."</div>
+        <div class="label">Texto principal</div>
+        <p>No es tu genética. Es que te dieron el manual equivocado: rutinas hechas para cuerpos que ganan músculo respirando. El tuyo juega con otras reglas.<br><br>FITKIT es el método para ectomorfos: entreno, comida y descanso medidos para tu metabolismo. Deja de ser el flaco invisible.</p>
+        <div class="label">CTA</div><span class="cta">Quiero el método →</span>
+        <div class="visual">Visual: foto antes/después oscura con luz volt, o el hombre con barra (cover-rutina). Texto en pantalla con el gancho.</div>
+      </div>
+
+      <div class="card">
+        <div class="adimg" style="background-image:url('marketing/ad-2.png')"></div>
+        <div class="tag">Anuncio 02 · El enemigo</div>
+        <div class="hook">"‘Tengo mala genética' es la excusa más cara del gym."</div>
+        <div class="label">Texto principal</div>
+        <p>El ectomorfo no necesita más cardio ni más fuerza de voluntad. Necesita comer y entrenar como lo que es.<br><br>3 ebooks: la rutina, la comida y un reto de 30 días para verlo en el espejo. El flaco que SÍ crece.</p>
+        <div class="label">CTA</div><span class="cta">Empezar hoy →</span>
+        <div class="visual">Visual: tipografía volt sobre negro, gancho enorme. Estilo declaración (sin foto o con gym oscuro de fondo).</div>
+      </div>
+
+      <div class="card">
+        <div class="adimg" style="background-image:url('marketing/ad-3.png')"></div>
+        <div class="tag">Anuncio 03 · Transformación</div>
+        <div class="hook">"+6 kg de músculo en 12 semanas. Sin vivir en el gym."</div>
+        <div class="label">Texto principal</div>
+        <p>Pasé años entrenando sin ver cambios. El problema no era el esfuerzo: era el método. Cuando empecé a entrenar y comer como ectomorfo, todo cambió.<br><br>FITKIT condensa ese método en 3 ebooks. Tu primer cambio real empieza con el Reto 30 Días.</p>
+        <div class="label">CTA</div><span class="cta">Ver la transformación →</span>
+        <div class="visual">Visual: antes/después lado a lado (before.png → hero1.png), barra de "+6 kg" en volt.</div>
+      </div>
+
+      <div class="card">
+        <div class="adimg" style="background-image:url('marketing/ad-4.png')"></div>
+        <div class="tag">Anuncio 04 · Oferta</div>
+        <div class="hook">"El pack completo cuesta menos que un bote de proteína."</div>
+        <div class="label">Texto principal</div>
+        <p>3 ebooks — rutina, recetas hipercalóricas y el reto de 30 días — por menos de lo que gastas en un mes de suplementos que ni necesitas.<br><br>Descarga inmediata. Garantía de 30 días: si no ves cambios, te devolvemos el 100%.</p>
+        <div class="label">CTA</div><span class="cta">Comprar el pack →</span>
+        <div class="visual">Visual: stack 3D de los 3 ebooks con precio tachado $29 → $14 en volt.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- REELS / TIKTOK -->
+  <section class="sec">
+    <div class="k">02 — Reels / TikTok</div>
+    <h2>6 ganchos + guion</h2>
+    <div class="desc">Estructura: 1ª línea que detiene el scroll → un valor concreto → CTA. Primeros 2 segundos lo son todo.</div>
+    <div class="grid2">
+      <div class="card"><div class="tag">Reel 01</div><div class="hook">"Si comes y no creces, no es tu metabolismo. Es esto 👇"</div><div class="script">
+        <div class="beat"><b>0-2s · Gancho</b><br>Cara a cámara, gym oscuro: la frase del gancho.</div>
+        <div class="beat"><b>2-20s · Valor</b><br>"Comes mucho un día y nada al siguiente. Tu cuerpo no acumula superávit. La clave: comer las MISMAS calorías altas TODOS los días, sí o sí. 3 comidas + 1 batido. Punto."</div>
+        <div class="beat"><b>20-25s · CTA</b><br>"En FITKIT te dejo el cálculo exacto. Link en bio."</div>
+      </div></div>
+      <div class="card"><div class="tag">Reel 02</div><div class="hook">"El error #1 del flaco en el gym (lo hace el 90%)."</div><div class="script">
+        <div class="beat"><b>Gancho</b><br>"Si eres flaco y haces esto, estás saboteando tus ganancias."</div>
+        <div class="beat"><b>Valor</b><br>"Demasiado volumen. 20 series por grupo no te hacen crecer, te queman. Tu sistema nervioso es tu límite. Menos series, más pesadas, más descanso."</div>
+        <div class="beat"><b>CTA</b><br>"La rutina completa, en el link."</div>
+      </div></div>
+      <div class="card"><div class="tag">Reel 03</div><div class="hook">"Cómo comer 3000 kcal sin reventarte el estómago."</div><div class="script">
+        <div class="beat"><b>Gancho</b><br>"El flaco no come poco porque quiere. Come poco porque se llena."</div>
+        <div class="beat"><b>Valor</b><br>"Truco: calorías líquidas. Un batido casero de 1000 kcal (leche, avena, plátano, mantequilla de cacahuete). Te lo bebes en 2 min."</div>
+        <div class="beat"><b>CTA</b><br>"30 recetas así en Cocina de Volumen."</div>
+      </div></div>
+      <div class="card"><div class="tag">Reel 04</div><div class="hook">"Deja de hacer cardio si quieres crecer."</div><div class="script">
+        <div class="beat"><b>Gancho</b><br>"Si eres ectomorfo y haces cardio para ‘estar fit', estás quemando tus ganancias."</div>
+        <div class="beat"><b>Valor</b><br>"El cardio es un impuesto sobre tus calorías. Máximo 2 sesiones suaves. Andas, vives, subes escaleras: ya tienes suficiente."</div>
+        <div class="beat"><b>CTA</b><br>"Por qué, en el link."</div>
+      </div></div>
+      <div class="card"><div class="tag">Reel 05</div><div class="hook">"3 ejercicios que el ectomorfo DEBE priorizar."</div><div class="script">
+        <div class="beat"><b>Gancho</b><br>"Si solo pudieras hacer 3 ejercicios siendo flaco, serían estos."</div>
+        <div class="beat"><b>Valor</b><br>"Sentadilla, peso muerto, press banca. Compuestos pesados. Mueven más músculo y disparan más hormona. Los curls vienen después."</div>
+        <div class="beat"><b>CTA</b><br>"La rutina entera, link en bio."</div>
+      </div></div>
+      <div class="card"><div class="tag">Reel 06</div><div class="hook">"Llevo 3 meses comiendo así y por fin subí de peso."</div><div class="script">
+        <div class="beat"><b>Gancho</b><br>Plato de comida real a cámara: "Esto es lo que come un flaco que SÍ crece."</div>
+        <div class="beat"><b>Valor</b><br>Muestra 1 día: avena power, bowl pollo+arroz, batido, cena. "3000 kcal sin comida basura."</div>
+        <div class="beat"><b>CTA</b><br>"El menú completo en el link."</div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- CARRUSELES -->
+  <section class="sec">
+    <div class="k">03 — Carruseles IG</div>
+    <h2>3 carruseles (slide a slide)</h2>
+    <div class="desc">Guardan y comparten. Portada con gancho, valor en el medio, CTA al final.</div>
+    <div class="grid2">
+      <div class="card"><div class="tag">Carrusel A</div><h3>5 razones por las que el flaco no crece</h3>
+        <ol><li><b>Portada:</b> "5 razones por las que comes y NO creces"</li><li>Comes distinto cada día (sin superávit constante)</li><li>Entrenas con volumen de mesomorfo</li><li>Demasiado cardio quemando calorías</li><li>Duermes menos de 7h (mata la hormona)</li><li>No progresas cargas (mismo peso 3 meses)</li><li><b>CTA:</b> "El método completo en FITKIT → link en bio"</li></ol></div>
+      <div class="card"><div class="tag">Carrusel B</div><h3>Qué comer para ganar masa siendo ecto</h3>
+        <ol><li><b>Portada:</b> "El plato del flaco que SÍ crece"</li><li>Regla: 2 g proteína/kg, todos los días</li><li>Carbos = tu mejor amigo (arroz, avena, pasta)</li><li>Grasas para sumar calorías (frutos secos, AOVE)</li><li>El batido salvavidas (1000 kcal líquidas)</li><li>Ejemplo de día completo (3000 kcal)</li><li><b>CTA:</b> "30 recetas en Cocina de Volumen"</li></ol></div>
+      <div class="card"><div class="tag">Carrusel C</div><h3>Tu primera semana de rutina ecto</h3>
+        <ol><li><b>Portada:</b> "Si eres flaco, entrena ASÍ esta semana"</li><li>Día 1 Push · básicos pesados</li><li>Día 2 Pull · dominadas + remo</li><li>Día 3 descanso (creces aquí)</li><li>Día 4 Legs · sentadilla + peso muerto</li><li>Regla: progresa carga cada semana</li><li><b>CTA:</b> "El plan de 12 semanas en FITKIT"</li></ol></div>
+    </div>
+  </section>
+
+  <!-- EMAILS -->
+  <section class="sec">
+    <div class="k">04 — Emails</div>
+    <h2>Secuencia de venta</h2>
+    <div class="desc">Email de bienvenida (lead magnet) + email de venta del pack. Tono directo, identidad.</div>
+    <div class="email">
+      <div class="subj"><span>Email 1 · Bienvenida / entrega</span>Aquí está tu primer paso, [nombre] 👊</div>
+      <pre>Si estás aquí es porque estás cansado de entrenar y verte igual.
+
+Te entiendo. Yo viví años en ese bucle: gym, comer, esforzarme… y el espejo no cambiaba. El problema no era yo. Era el método.
+
+Te dejo tu guía gratis: [recurso]. Léela hoy, no mañana.
+
+Y prepárate, porque en los próximos días te voy a enseñar por qué tu cuerpo no crece — y exactamente qué hacer.
+
+— El equipo FITKIT
+fitkit.site</pre>
+    </div>
+    <div class="email">
+      <div class="subj"><span>Email 2 · Venta del pack</span>El flaco que sí crece no tiene mejor genética. Tiene esto.</div>
+      <pre>Pregunta honesta: ¿cómo te vas a ver dentro de 1 año si sigues entrenando igual?
+
+Misma rutina. Mismo peso en la barra. Mismo reflejo.
+
+El método FITKIT son 3 ebooks: la rutina para tu cuerpo, la comida para crecer, y un reto de 30 días para verlo de verdad.
+
+Hoy, el pack completo está a $14 (en vez de $29). Menos que un bote de proteína. Y con garantía de 30 días: si no ves cambios, te devolvemos todo.
+
+No es suerte. Es consistencia con el método correcto.
+
+→ Empieza aquí: fitkit.site
+
+— FITKIT</pre>
+    </div>
+  </section>
+
+  <!-- PERFIL -->
+  <section class="sec">
+    <div class="k">05 — Perfil / contenido</div>
+    <h2>Bio y ritmo de publicación</h2>
+    <div class="grid2">
+      <div class="card"><div class="tag">Bio Instagram / TikTok</div>
+        <p style="color:var(--bone)">FITKIT · El método para el cuerpo que no crece fácil 💪<br>Rutina · Comida · Reto 30 días<br>El flaco que SÍ crece 👇</p>
+        <div class="label">Link</div><p>fitkit.site</p></div>
+      <div class="card"><div class="tag">Ritmo semanal</div>
+        <ul><li>3 Reels/semana (ganchos de arriba)</li><li>2 carruseles/semana (educar = guardar)</li><li>Stories diarias (detrás, antes/después, encuestas)</li><li>1 email/semana a la lista</li></ul>
+        <div class="label">Regla de oro</div><p>80% valor / 20% venta. Educa, agita, y solo entonces ofrece.</p></div>
+    </div>
+  </section>
+
+  <footer>FITKIT® · fitkit.site · Kit de marketing · 2026</footer>
+</div>
+</body>
+</html>
